@@ -1,111 +1,90 @@
 ---
-toc: false
+toc: true
+theme: dashboard
 ---
+
+```js
+import {
+  averageMonthlyParticipation,
+  yearlyCostsLineChart,
+} from "./components/costsOfSnap.js";
+```
+
+```js
+const snapCostsAndParticipation = FileAttachment(
+  "data/snap_participation_and_spending_with_projections.csv"
+).csv({ typed: true });
+```
+
+```js
+const snapParticipation2023 = snapCostsAndParticipation.filter(
+  (d) => d["Fiscal year"] === 2023
+)[0]["Average monthly participation (Millions of people)"];
+const snapCost2023 = snapCostsAndParticipation.filter(
+  (d) => d["Fiscal year"] === 2023
+)[0]["Inflation-adjusted annual spending (Billions of 2023 dollars)"];
+```
 
 <div class="hero">
-  <h1>SNAP Performance Indicators</h1>
-  <h2>Welcome to your new app! Edit&nbsp;<code style="font-size: 90%;">src/index.md</code> to change this page.</h2>
-  <a href="https://observablehq.com/framework/getting-started">Get started<span style="display: inline-block; margin-left: 0.25rem;">↗︎</span></a>
+  <h1>Visualizing SNAP Performance Indicators</h1>
 </div>
 
-<div class="grid grid-cols-2" style="grid-auto-rows: 504px;">
-  <div class="card">${
-    resize((width) => Plot.plot({
-      title: "Your awesomeness over time 🚀",
-      subtitle: "Up and to the right!",
-      width,
-      y: {grid: true, label: "Awesomeness"},
-      marks: [
-        Plot.ruleY([0]),
-        Plot.lineY(aapl, {x: "Date", y: "Close", tip: true})
-      ]
-    }))
-  }</div>
-  <div class="card">${
-    resize((width) => Plot.plot({
-      title: "How big are penguins, anyway? 🐧",
-      width,
-      grid: true,
-      x: {label: "Body mass (g)"},
-      y: {label: "Flipper length (mm)"},
-      color: {legend: true},
-      marks: [
-        Plot.linearRegressionY(penguins, {x: "body_mass_g", y: "flipper_length_mm", stroke: "species"}),
-        Plot.dot(penguins, {x: "body_mass_g", y: "flipper_length_mm", stroke: "species", tip: true})
-      ]
-    }))
-  }</div>
+The [Supplemental Nutrition Assistance Program](https://www.fns.usda.gov/snap/supplemental-nutrition-assistance-program) implements a [quality control system](https://www.fns.usda.gov/snap/qc) with the following aims, which are, according to the USDA,
+
+- to measure the accuracy of states’ SNAP eligibility and benefit determinations,
+- and to identify and correct errors in eligibility and benefit calculations.
+
+Let's start with a quick overview of the cost of SNAP for context. We'll update some charts from the [USDA economic Research Service Key Statistics page](https://www.ers.usda.gov/topics/food-nutrition-assistance/supplemental-nutrition-assistance-program-snap/key-statistics-and-research/) to start with.
+
+## The Benefits & Costs of SNAP
+
+As of writing this in the Fall of 2024, debate continues on renewing the 2018 Farm Bill, of which SNAP funding accounts for the majority of the costs.
+
+<div class="grid grid-cols-2">
+<div class="card">
+<h1>${snapParticipation2023}</h1> million average monthly participants benefited from SNAP in 2023
 </div>
+<div class="card">
+<h1>$${snapCost2023}</h1> billion dollars spent on SNAP in 2023 (in 2023 dollars)
+</div>
+</div>
+<div class="grid grid-cols-2">
+<div class="card">
+${resize((width) => averageMonthlyParticipation(snapCostsAndParticipation, width))}
+</div>
+<div class="card">
+${resize((width) => yearlyCostsLineChart(snapCostsAndParticipation, width))}
+</div>
+</div>
+</div>
+
+It's hard to ignore that projections for SNAP enrollment & spending diverge, with spending increasing yearly from a higher baseline while enrollment is expected to steadily decrease.
+
+This is partially due to [changes in how the Thrifty Food Plan is calculated during the Biden administration](https://www.usda.gov/media/press-releases/2021/08/16/usda-modernizes-thrifty-food-plan-updates-snap-benefits) to better reflect increases in the cost of food and modern diet recommendations.
+
+With the SNAP program reaching tens of millions of Americans each year, and the costs increasing, how does the USDA make sure that the program runs well?
 
 ---
 
-## Next steps
-
-Here are some ideas of things you could try…
-
-<div class="grid grid-cols-4">
-  <div class="card">
-    Chart your own data using <a href="https://observablehq.com/framework/lib/plot"><code>Plot</code></a> and <a href="https://observablehq.com/framework/files"><code>FileAttachment</code></a>. Make it responsive using <a href="https://observablehq.com/framework/javascript#resize(render)"><code>resize</code></a>.
-  </div>
-  <div class="card">
-    Create a <a href="https://observablehq.com/framework/project-structure">new page</a> by adding a Markdown file (<code>whatever.md</code>) to the <code>src</code> folder.
-  </div>
-  <div class="card">
-    Add a drop-down menu using <a href="https://observablehq.com/framework/inputs/select"><code>Inputs.select</code></a> and use it to filter the data shown in a chart.
-  </div>
-  <div class="card">
-    Write a <a href="https://observablehq.com/framework/loaders">data loader</a> that queries a local database or API, generating a data snapshot on build.
-  </div>
-  <div class="card">
-    Import a <a href="https://observablehq.com/framework/imports">recommended library</a> from npm, such as <a href="https://observablehq.com/framework/lib/leaflet">Leaflet</a>, <a href="https://observablehq.com/framework/lib/dot">GraphViz</a>, <a href="https://observablehq.com/framework/lib/tex">TeX</a>, or <a href="https://observablehq.com/framework/lib/duckdb">DuckDB</a>.
-  </div>
-  <div class="card">
-    Ask for help, or share your work or ideas, on the <a href="https://talk.observablehq.com/">Observable forum</a>.
-  </div>
-  <div class="card">
-    Visit <a href="https://github.com/observablehq/framework">Framework on GitHub</a> and give us a star. Or file an issue if you’ve found a bug!
-  </div>
 </div>
+<details>
+  <summary>Notes on <i>Average Monthly Participation Each Year in SNAP</i> and <i>Yearly Spending on SNAP</i> charts
+  </summary>
 
-<style>
+<i>USDA Note for data from 2000 to 2023</i>: figures are "based on preliminary data from the September 2023 Program Information Report (Keydata) released by USDA, Food and Nutrition Service (FNS) in December 2023. FY 2019 average monthly participants excludes January and February 2019 counts, which were affected by a partial Federal Government shutdown.
 
-.hero {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  font-family: var(--sans-serif);
-  margin: 4rem 0 8rem;
-  text-wrap: balance;
-  text-align: center;
-}
+Spending is noted in billions of 2023 dollars, adjusted using the Personal Consumption Expenditures price index, U.S. Department of Commerce, Bureau of Economic Analysis. Source: USDA, Economic Research Service using USDA, FNS data"; see "SNAP average monthly participation and inflation-adjusted annual program spending, FY 2000–23" at [USDA Key Statistics page](https://www.ers.usda.gov/topics/food-nutrition-assistance/supplemental-nutrition-assistance-program-snap/key-statistics-and-research/).
 
-.hero h1 {
-  margin: 1rem 0;
-  padding: 1rem 0;
-  max-width: none;
-  font-size: 14vw;
-  font-weight: 900;
-  line-height: 1;
-  background: linear-gradient(30deg, var(--theme-foreground-focus), currentColor);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
+<i>Author Note (data from 2024 to 2034)</i>: Figures use estimated average monthly participation and outlays from [Congressional Budget Office Baseline Projections, released June 2024.](https://www.cbo.gov/system/files/2024-06/51312-2024-06-snap.pdf) I chose to use outlays to align with spending data from the USDA, compared to the budget authority, as described in the [CBO's Budgetary Terms Explained page](https://www.cbo.gov/publication/57660).
 
-.hero h2 {
-  margin: 0;
-  max-width: 34em;
-  font-size: 20px;
-  font-style: initial;
-  font-weight: 500;
-  line-height: 1.5;
-  color: var(--theme-foreground-muted);
-}
+See the [How does SNAP enrollment change after economic downturns](http://127.0.0.1:3000/enrollment) page in this website for more explanation about the USDA's decision to exclude January and February 2019 counts, as well.
 
-@media (min-width: 640px) {
-  .hero h1 {
-    font-size: 90px;
-  }
-}
+</details>
 
-</style>
+---
+
+## The Quality Control Process
+
+We'll walk through three quality control measurements that the USDA publishes: payment error rates, case and procedural error rates, and application processing timeliness rates.
+
+These are determined through sampling about 75,000 cases per year - if you're interested, you can [download quality control data](https://www.fns.usda.gov/snap/qc/database) from the USDA.
