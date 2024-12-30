@@ -1,4 +1,4 @@
-import * as Plot from "npm:@observablehq/plot";
+import * as Plot from "../../_npm/@observablehq/plot@0.6.16/75abcbb5.js";
 
 export function paymentErrorRatesOverTime(data, width) {
   const notes = [

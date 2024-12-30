@@ -29,6 +29,8 @@ const snapCost2023 = snapCostsAndParticipation.filter(
   <h1>Visualizing SNAP Performance Indicators</h1>
 </div>
 
+**work-in-progress as of 12-30-24**
+
 The [Supplemental Nutrition Assistance Program](https://www.fns.usda.gov/snap/supplemental-nutrition-assistance-program) implements a [quality control system](https://www.fns.usda.gov/snap/qc) with the following aims, which are, according to the USDA,
 
 - to measure the accuracy of states’ SNAP eligibility and benefit determinations,
