@@ -8,12 +8,21 @@ import {
   averageMonthlyParticipation,
   yearlyCostsLineChart,
 } from "./components/costsOfSnap.js";
+import { enrollmentByState } from "./components/enrollmentByState.js";
 ```
 
 ```js
 const snapCostsAndParticipation = FileAttachment(
   "data/snap_participation_and_spending_with_projections.csv"
 ).csv({ typed: true });
+```
+
+```js
+const snapByState = FileAttachment("data/state_participation_rate_map.csv").csv(
+  { typed: true }
+);
+
+const grid = FileAttachment("data/grid.csv").csv({ typed: true });
 ```
 
 ```js
@@ -29,14 +38,14 @@ const snapCost2023 = snapCostsAndParticipation.filter(
   <h1>Visualizing SNAP Performance Indicators</h1>
 </div>
 
-**work-in-progress as of 12-30-24**
+**work-in-progress as of 1-20-25**
 
 The [Supplemental Nutrition Assistance Program](https://www.fns.usda.gov/snap/supplemental-nutrition-assistance-program) implements a [quality control system](https://www.fns.usda.gov/snap/qc) with the following aims, which are, according to the USDA,
 
 - to measure the accuracy of states’ SNAP eligibility and benefit determinations,
 - and to identify and correct errors in eligibility and benefit calculations.
 
-Let's start with a quick overview of the cost of SNAP for context. We'll update some charts from the [USDA economic Research Service Key Statistics page](https://www.ers.usda.gov/topics/food-nutrition-assistance/supplemental-nutrition-assistance-program-snap/key-statistics-and-research/) to start with.
+Let's start with a quick overview of SNAP for context. We'll update some charts from the [USDA economic Research Service Key Statistics page](https://www.ers.usda.gov/topics/food-nutrition-assistance/supplemental-nutrition-assistance-program-snap/key-statistics-and-research/) to start with.
 
 ## The Benefits & Costs of SNAP
 
@@ -64,7 +73,7 @@ It's hard to ignore that projections for SNAP enrollment & spending diverge, wit
 
 This is partially due to [changes in how the Thrifty Food Plan is calculated during the Biden administration](https://www.usda.gov/media/press-releases/2021/08/16/usda-modernizes-thrifty-food-plan-updates-snap-benefits) to better reflect increases in the cost of food and modern diet recommendations.
 
-With the SNAP program reaching tens of millions of Americans each year, and the costs increasing, how does the USDA make sure that the program runs well?
+Note that the cost of SNAP benefits are funded by the federal government, but administration costs are split with each state. Each state also has descretion to adjust eligibity past minimum guidelines that the federal goverment sets.
 
 ---
 
@@ -85,7 +94,33 @@ See the [How does SNAP enrollment change after economic downturns](http://127.0.
 
 ---
 
+## Where are SNAP benefits distributed to?
+
+<div class="grid grid-cols-3" style="grid-auto-rows: auto;">
+
+Participation in the SNAP program varies by state. Utah had the [lowest enrollment rate nationally](https://kslnewsradio.com/utah/thousands-of-eligible-older-utahns-not-enrolled-for-snap/2130363/), while New Mexico stands out with nearly 1 in 4 people receiving SNAP benefits at some point in 2023.<br><br> In general, the mid-northwest region of the United States holds lower participation rates than the rest of the country.<br><br>The [Center on Budget and Policy Priorities also provides state-by-state fact sheets](https://www.cbpp.org/research/a-closer-look-at-who-benefits-from-snap-state-by-state-fact-sheets), although only up to FY 2022 SNAP data.
+
+<div class="card grid-colspan-2">
+  ${resize((width) => enrollmentByState(snapByState, grid))}
+</div>
+</div>
+
+---
+
+</div>
+<details>
+  <summary>Notes on <i>SNAP participation rate by state in fiscal year 2023</i>
+  </summary>
+
+Data comes from the [USDA Key Statistics page](https://www.ers.usda.gov/topics/food-nutrition-assistance/supplemental-nutrition-assistance-program-snap/key-statistics-and-research). USDA also credits the Economic Research Service using data from USDA, Food and Nutrition Service and U.S. Department of Commerce, Bureau of the Census for the original map, entitled "Percent of population receiving SNAP benefits in fiscal year 2023".
+
+</details>
+
+---
+
 ## The Quality Control Process
+
+With the SNAP program reaching tens of millions of Americans each year, and the costs increasing, how does the USDA make sure that the program runs well?
 
 We'll walk through three quality control measurements that the USDA publishes: payment error rates, case and procedural error rates, and application processing timeliness rates.
 

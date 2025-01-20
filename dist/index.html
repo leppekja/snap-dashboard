@@ -12,6 +12,7 @@
 <link rel="modulepreload" href="./_observablehq/runtime.4471fcf4.js">
 <link rel="modulepreload" href="./_observablehq/stdlib.bb0de5c5.js">
 <link rel="modulepreload" href="./_import/components/costsOfSnap.30a6e8e4.js">
+<link rel="modulepreload" href="./_import/components/enrollmentByState.6075cc4a.js">
 <link rel="modulepreload" href="./_npm/@observablehq/plot@0.6.16/75abcbb5.js">
 <link rel="modulepreload" href="./_npm/d3-dsv@3.0.1/407f7a1f.js">
 <link rel="modulepreload" href="./_npm/d3@7.9.0/0441914a.js">
@@ -56,12 +57,14 @@
 import {define} from "./_observablehq/client.08793814.js";
 import {registerFile} from "./_observablehq/stdlib.bb0de5c5.js";
 
+registerFile("./data/grid.csv", {"name":"./data/grid.csv","mimeType":"text/csv","path":"./_file/data/grid.399d5ec0.csv","lastModified":1737410605265,"size":869});
 registerFile("./data/snap_participation_and_spending_with_projections.csv", {"name":"./data/snap_participation_and_spending_with_projections.csv","mimeType":"text/csv","path":"./_file/data/snap_participation_and_spending_with_projections.3e8f7e4c.csv","lastModified":1727659167606,"size":774});
+registerFile("./data/state_participation_rate_map.csv", {"name":"./data/state_participation_rate_map.csv","mimeType":"text/csv","path":"./_file/data/state_participation_rate_map.3953bec0.csv","lastModified":1737409060862,"size":1335});
 
-define({id: "fdce6d40", outputs: ["averageMonthlyParticipation","yearlyCostsLineChart"], body: async () => {
-const {averageMonthlyParticipation, yearlyCostsLineChart} = await import("./_import/components/costsOfSnap.30a6e8e4.js");
+define({id: "435baae3", outputs: ["averageMonthlyParticipation","yearlyCostsLineChart","enrollmentByState"], body: async () => {
+const [{averageMonthlyParticipation, yearlyCostsLineChart}, {enrollmentByState}] = await Promise.all([import("./_import/components/costsOfSnap.30a6e8e4.js"), import("./_import/components/enrollmentByState.6075cc4a.js")]);
 
-return {averageMonthlyParticipation,yearlyCostsLineChart};
+return {averageMonthlyParticipation,yearlyCostsLineChart,enrollmentByState};
 }});
 
 define({id: "6e587afb", inputs: ["FileAttachment"], outputs: ["snapCostsAndParticipation"], body: (FileAttachment) => {
@@ -69,6 +72,15 @@ const snapCostsAndParticipation = FileAttachment(
   "./data/snap_participation_and_spending_with_projections.csv"
 ).csv({ typed: true });
 return {snapCostsAndParticipation};
+}});
+
+define({id: "5e15a233", inputs: ["FileAttachment"], outputs: ["snapByState","grid"], body: (FileAttachment) => {
+const snapByState = FileAttachment("./data/state_participation_rate_map.csv").csv(
+  { typed: true }
+);
+
+const grid = FileAttachment("./data/grid.csv").csv({ typed: true });
+return {snapByState,grid};
 }});
 
 define({id: "1a244481", inputs: ["snapCostsAndParticipation"], outputs: ["snapParticipation2023","snapCost2023"], body: (snapCostsAndParticipation) => {
@@ -105,6 +117,12 @@ resize((width) => yearlyCostsLineChart(snapCostsAndParticipation, width))
 ))
 }});
 
+define({id: "19d45931", mode: "inline", inputs: ["resize","enrollmentByState","snapByState","grid","display"], body: async (resize,enrollmentByState,snapByState,grid,display) => {
+display(await(
+resize((width) => enrollmentByState(snapByState, grid))
+))
+}});
+
 </script>
 <input id="observablehq-sidebar-toggle" type="checkbox" title="Toggle sidebar">
 <label id="observablehq-sidebar-backdrop" for="observablehq-sidebar-toggle"></label>
@@ -132,25 +150,27 @@ resize((width) => yearlyCostsLineChart(snapCostsAndParticipation, width))
 <div>Contents</div>
 <ol>
 <li class="observablehq-secondary-link"><a href="#the-benefits-and-costs-of-snap">The Benefits &amp; Costs of SNAP</a></li>
+<li class="observablehq-secondary-link"><a href="#where-are-snap-benefits-distributed-to">Where are SNAP benefits distributed to?</a></li>
 <li class="observablehq-secondary-link"><a href="#the-quality-control-process">The Quality Control Process</a></li>
 </ol>
 </nav>
 </aside>
 <div id="observablehq-center">
 <main id="observablehq-main" class="observablehq">
-<div class="observablehq observablehq--block"><!--:fdce6d40:--></div>
+<div class="observablehq observablehq--block"><!--:435baae3:--></div>
 <div class="observablehq observablehq--block"><!--:6e587afb:--></div>
+<div class="observablehq observablehq--block"><!--:5e15a233:--></div>
 <div class="observablehq observablehq--block"><!--:1a244481:--></div>
 <div class="hero">
   <h1>Visualizing SNAP Performance Indicators</h1>
 </div>
-<p><strong>work-in-progress as of 12-30-24</strong></p>
+<p><strong>work-in-progress as of 1-20-25</strong></p>
 <p>The <a href="https://www.fns.usda.gov/snap/supplemental-nutrition-assistance-program" target="_blank" rel="noopener noreferrer">Supplemental Nutrition Assistance Program</a> implements a <a href="https://www.fns.usda.gov/snap/qc" target="_blank" rel="noopener noreferrer">quality control system</a> with the following aims, which are, according to the USDA,</p>
 <ul>
 <li>to measure the accuracy of states’ SNAP eligibility and benefit determinations,</li>
 <li>and to identify and correct errors in eligibility and benefit calculations.</li>
 </ul>
-<p>Let's start with a quick overview of the cost of SNAP for context. We'll update some charts from the <a href="https://www.ers.usda.gov/topics/food-nutrition-assistance/supplemental-nutrition-assistance-program-snap/key-statistics-and-research/" target="_blank" rel="noopener noreferrer">USDA economic Research Service Key Statistics page</a> to start with.</p>
+<p>Let's start with a quick overview of SNAP for context. We'll update some charts from the <a href="https://www.ers.usda.gov/topics/food-nutrition-assistance/supplemental-nutrition-assistance-program-snap/key-statistics-and-research/" target="_blank" rel="noopener noreferrer">USDA economic Research Service Key Statistics page</a> to start with.</p>
 <h2 id="the-benefits-and-costs-of-snap" tabindex="-1"><a class="observablehq-header-anchor" href="#the-benefits-and-costs-of-snap">The Benefits &amp; Costs of SNAP</a></h2>
 <p>As of writing this in the Fall of 2024, debate continues on renewing the 2018 Farm Bill, of which SNAP funding accounts for the majority of the costs.</p>
 <div class="grid grid-cols-2">
@@ -172,7 +192,7 @@ resize((width) => yearlyCostsLineChart(snapCostsAndParticipation, width))
 
 <p>It's hard to ignore that projections for SNAP enrollment &amp; spending diverge, with spending increasing yearly from a higher baseline while enrollment is expected to steadily decrease.</p>
 <p>This is partially due to <a href="https://www.usda.gov/media/press-releases/2021/08/16/usda-modernizes-thrifty-food-plan-updates-snap-benefits" target="_blank" rel="noopener noreferrer">changes in how the Thrifty Food Plan is calculated during the Biden administration</a> to better reflect increases in the cost of food and modern diet recommendations.</p>
-<p>With the SNAP program reaching tens of millions of Americans each year, and the costs increasing, how does the USDA make sure that the program runs well?</p>
+<p>Note that the cost of SNAP benefits are funded by the federal government, but administration costs are split with each state. Each state also has descretion to adjust eligibity past minimum guidelines that the federal goverment sets.</p>
 <hr>
 
 <details>
@@ -184,12 +204,28 @@ resize((width) => yearlyCostsLineChart(snapCostsAndParticipation, width))
 <p>See the <a href="http://127.0.0.1:3000/enrollment" target="_blank" rel="noopener noreferrer">How does SNAP enrollment change after economic downturns</a> page in this website for more explanation about the USDA's decision to exclude January and February 2019 counts, as well.</p>
 </details>
 <hr>
+<h2 id="where-are-snap-benefits-distributed-to" tabindex="-1"><a class="observablehq-header-anchor" href="#where-are-snap-benefits-distributed-to">Where are SNAP benefits distributed to?</a></h2>
+<div class="grid grid-cols-3" style="grid-auto-rows: auto;">
+<p>Participation in the SNAP program varies by state. Utah had the <a href="https://kslnewsradio.com/utah/thousands-of-eligible-older-utahns-not-enrolled-for-snap/2130363/" target="_blank" rel="noopener noreferrer">lowest enrollment rate nationally</a>, while New Mexico stands out with nearly 1 in 4 people receiving SNAP benefits at some point in 2023.<br><br> In general, the mid-northwest region of the United States holds lower participation rates than the rest of the country.<br><br>The <a href="https://www.cbpp.org/research/a-closer-look-at-who-benefits-from-snap-state-by-state-fact-sheets" target="_blank" rel="noopener noreferrer">Center on Budget and Policy Priorities also provides state-by-state fact sheets</a>, although only up to FY 2022 SNAP data.</p>
+<div class="card grid-colspan-2">
+  <observablehq-loading></observablehq-loading><!--:19d45931:-->
+</div>
+</div>
+<hr>
+
+<details>
+  <summary>Notes on <i>SNAP participation rate by state in fiscal year 2023</i>
+  </summary>
+<p>Data comes from the <a href="https://www.ers.usda.gov/topics/food-nutrition-assistance/supplemental-nutrition-assistance-program-snap/key-statistics-and-research" target="_blank" rel="noopener noreferrer">USDA Key Statistics page</a>. USDA also credits the Economic Research Service using data from USDA, Food and Nutrition Service and U.S. Department of Commerce, Bureau of the Census for the original map, entitled "Percent of population receiving SNAP benefits in fiscal year 2023".</p>
+</details>
+<hr>
 <h2 id="the-quality-control-process" tabindex="-1"><a class="observablehq-header-anchor" href="#the-quality-control-process">The Quality Control Process</a></h2>
+<p>With the SNAP program reaching tens of millions of Americans each year, and the costs increasing, how does the USDA make sure that the program runs well?</p>
 <p>We'll walk through three quality control measurements that the USDA publishes: payment error rates, case and procedural error rates, and application processing timeliness rates.</p>
 <p>These are determined through sampling about 75,000 cases per year - if you're interested, you can <a href="https://www.fns.usda.gov/snap/qc/database" target="_blank" rel="noopener noreferrer">download quality control data</a> from the USDA.</p>
 </main>
 <footer id="observablehq-footer">
 <nav><a rel="next" href="./payment-error-rates"><span>Do states accurately determine eligibility and benefits?</span></a></nav>
-<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2024-12-30T02:26:03">Dec 30, 2024</a>.</div>
+<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2025-01-20T18:47:47">Jan 20, 2025</a>.</div>
 </footer>
 </div>
