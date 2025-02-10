@@ -38,25 +38,20 @@ const snapCost2023 = snapCostsAndParticipation.filter(
   <h1>Visualizing SNAP Performance Indicators</h1>
 </div>
 
-**work-in-progress as of 1-20-25**
-
-The [Supplemental Nutrition Assistance Program](https://www.fns.usda.gov/snap/supplemental-nutrition-assistance-program) implements a [quality control system](https://www.fns.usda.gov/snap/qc) with the following aims, which are, according to the USDA,
-
-- to measure the accuracy of states’ SNAP eligibility and benefit determinations,
-- and to identify and correct errors in eligibility and benefit calculations.
-
-Let's start with a quick overview of SNAP for context. We'll update some charts from the [USDA economic Research Service Key Statistics page](https://www.ers.usda.gov/topics/food-nutrition-assistance/supplemental-nutrition-assistance-program-snap/key-statistics-and-research/) to start with.
+A work-in-progress as of 2-1-25 exploring USDA data on [SNAP quality control measures](https://www.fns.usda.gov/snap/qc). This dashboard shows examples on how to use [published data](https://github.com/leppekja/SNAP-performance-indicators) while highlighting its limitations.
 
 ## The Benefits & Costs of SNAP
+
+Let's start with a quick overview of SNAP for context. We'll update some charts from the [USDA economic Research Service Key Statistics page](https://www.ers.usda.gov/topics/food-nutrition-assistance/supplemental-nutrition-assistance-program-snap/key-statistics-and-research/) to start with.
 
 As of writing this in the Fall of 2024, debate continues on renewing the 2018 Farm Bill, of which SNAP funding accounts for the majority of the costs.
 
 <div class="grid grid-cols-2">
 <div class="card">
-<h1>${snapParticipation2023}</h1> million average monthly participants benefited from SNAP in 2023
+<h1>${snapParticipation2023}</h1> million average monthly participants benefited from SNAP in FY 2023
 </div>
 <div class="card">
-<h1>$${snapCost2023}</h1> billion dollars spent on SNAP in 2023 (in 2023 dollars)
+<h1>$${snapCost2023}</h1> billion dollars spent on SNAP in FY 2023 (in 2023 dollars)
 </div>
 </div>
 <div class="grid grid-cols-2">
@@ -98,7 +93,7 @@ See the [How does SNAP enrollment change after economic downturns](http://127.0.
 
 <div class="grid grid-cols-3" style="grid-auto-rows: auto;">
 
-Participation in the SNAP program varies by state. Utah had the [lowest enrollment rate nationally](https://kslnewsradio.com/utah/thousands-of-eligible-older-utahns-not-enrolled-for-snap/2130363/), while New Mexico stands out with nearly 1 in 4 people receiving SNAP benefits at some point in 2023.<br><br> In general, the mid-northwest region of the United States holds lower participation rates than the rest of the country.<br><br>The [Center on Budget and Policy Priorities also provides state-by-state fact sheets](https://www.cbpp.org/research/a-closer-look-at-who-benefits-from-snap-state-by-state-fact-sheets), although only up to FY 2022 SNAP data.
+Participation in the SNAP program varies by state. Utah had the [lowest enrollment rate nationally](https://kslnewsradio.com/utah/thousands-of-eligible-older-utahns-not-enrolled-for-snap/2130363/), while New Mexico stands out with nearly 1 in 4 people receiving SNAP benefits at some point in FY 2023.<br><br> In general, the mid-northwest region of the United States holds lower participation rates than the rest of the country.<br><br>The [Center on Budget and Policy Priorities also provides state-by-state fact sheets](https://www.cbpp.org/research/a-closer-look-at-who-benefits-from-snap-state-by-state-fact-sheets), although only up to FY 2022 SNAP data.
 
 <div class="card grid-colspan-2">
   ${resize((width) => enrollmentByState(snapByState, grid))}
@@ -122,6 +117,59 @@ Data comes from the [USDA Key Statistics page](https://www.ers.usda.gov/topics/f
 
 With the SNAP program reaching tens of millions of Americans each year, and the costs increasing, how does the USDA make sure that the program runs well?
 
-We'll walk through three quality control measurements that the USDA publishes: payment error rates, case and procedural error rates, and application processing timeliness rates.
+According to the USDA, the [Supplemental Nutrition Assistance Program](https://www.fns.usda.gov/snap/supplemental-nutrition-assistance-program) implements a [quality control system](https://www.fns.usda.gov/snap/qc) with the following aims:
 
-These are determined through sampling about 75,000 cases per year - if you're interested, you can [download quality control data](https://www.fns.usda.gov/snap/qc/database) from the USDA.
+- to measure the accuracy of states’ SNAP eligibility and benefit determinations
+- to identify and correct errors in eligibility and benefit calculations
+
+The USDA publishes this data on their website, and I've compilied it into a [repository here](https://github.com/leppekja/SNAP-performance-indicators). This dashboard will explore that data to and see what we can learn about SNAP benefits, while pointing out ways in which the data can be misinterpreted.
+
+We'll walk through four quality control measurements that the USDA publishes: <i>payment error rates, case and procedural error rates</i>, and <i>application processing timeliness rates</i>. We'll also take a look at the <i>Program Access Index</i> that the USDA publishes as well. From [the USDA definitions](https://www.fns.usda.gov/snap/qc):
+
+<div class="grid grid-cols-4">
+<div class="card">
+<h2>Payment Error Rate (PER)</h2>
+<h3>The national payment error rate in FY 2023 waas 11.68%.</h3>
+
+measures how accurately a state agency determined SNAP eligibility and benefit amounts for those who participate in SNAP.
+
+<i>Errors include both overpayments -- when households receive more benefits than they are entitled to – and underpayments – when households receive less benefits than they are entitled to.</i>
+
+</div>
+<div class="card">
+<h2>Case & Procedural Error Rate</h2>
+<h3>In FY 2023, 44.5% of cases with denials, suspensions, or terminiations had an issue with accuracy or timeliness.</h3>
+
+assesses the accuracy of state agency actions in cases in which applicants were denied, terminated, or suspended and did not receive benefits.
+
+<i>It also measures a state's compliance with federal procedural requirements, including the timeliness and accuracy of notifications sent to affected households.</i>
+
+</div>
+<div class="card">
+<h2>Application Processing Timeliness (APT)</h2>
+<h3>States processed an average of 80.7% applications on time in FY 2023.</h3>
+
+measures the timeliness of states’ processing of initial SNAP applications.
+
+<i>The Food and Nutrition Act of 2008 entitles all eligible households to SNAP benefits within 30 days of application, or within 7 days, if they are eligible for expedited service.</i>
+
+</div>
+<div class="card">
+<h2>Program Access Index (PAI)</h2>
+<h3>The national ratio of people that participated in SNAP to the estimated number of SNAP-eligible people was .8 in FY 2023.</h3>
+
+indicate[s] the degree to which low-income people have access to SNAP benefits.
+
+<i>The PAI compares a state’s average monthly SNAP participation to the number of residents with incomes below 125% of the federal poverty line.</i>
+
+</div>
+</div>
+
+These are determined through sampling about 50,000 cases per year - if you're interested, you can [download quality control data](https://www.fns.usda.gov/snap/qc/database) from the USDA. If not, continue on to see breakdowns of each quality control measure.
+
+<details>
+  <summary>Notes on <i>National Rates across QC measures</i>
+  </summary>
+  Published and calculated rates includes Guam, Virgin Islands, and the District of Columbia in national rates.
+
+</details>

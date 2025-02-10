@@ -8,7 +8,7 @@
 <link rel="preload" as="style" href="./_observablehq/theme-air,near-midnight,alt,wide.f6ca92af.css">
 <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&amp;display=swap" crossorigin>
 <link rel="stylesheet" type="text/css" href="./_observablehq/theme-air,near-midnight,alt,wide.f6ca92af.css">
-<link rel="modulepreload" href="./_observablehq/client.08793814.js">
+<link rel="modulepreload" href="./_observablehq/client.d8bdb03f.js">
 <link rel="modulepreload" href="./_observablehq/runtime.4471fcf4.js">
 <link rel="modulepreload" href="./_observablehq/stdlib.bb0de5c5.js">
 <link rel="modulepreload" href="./_import/components/costsOfSnap.30a6e8e4.js">
@@ -54,7 +54,7 @@
 <link rel="icon" href="./_file/observable.1af93621.png" type="image/png" sizes="32x32">
 <script type="module">
 
-import {define} from "./_observablehq/client.08793814.js";
+import {define} from "./_observablehq/client.d8bdb03f.js";
 import {registerFile} from "./_observablehq/stdlib.bb0de5c5.js";
 
 registerFile("./data/grid.csv", {"name":"./data/grid.csv","mimeType":"text/csv","path":"./_file/data/grid.399d5ec0.csv","lastModified":1737410605265,"size":869});
@@ -164,21 +164,16 @@ resize((width) => enrollmentByState(snapByState, grid))
 <div class="hero">
   <h1>Visualizing SNAP Performance Indicators</h1>
 </div>
-<p><strong>work-in-progress as of 1-20-25</strong></p>
-<p>The <a href="https://www.fns.usda.gov/snap/supplemental-nutrition-assistance-program" target="_blank" rel="noopener noreferrer">Supplemental Nutrition Assistance Program</a> implements a <a href="https://www.fns.usda.gov/snap/qc" target="_blank" rel="noopener noreferrer">quality control system</a> with the following aims, which are, according to the USDA,</p>
-<ul>
-<li>to measure the accuracy of states’ SNAP eligibility and benefit determinations,</li>
-<li>and to identify and correct errors in eligibility and benefit calculations.</li>
-</ul>
-<p>Let's start with a quick overview of SNAP for context. We'll update some charts from the <a href="https://www.ers.usda.gov/topics/food-nutrition-assistance/supplemental-nutrition-assistance-program-snap/key-statistics-and-research/" target="_blank" rel="noopener noreferrer">USDA economic Research Service Key Statistics page</a> to start with.</p>
+<p>A work-in-progress as of 2-1-25 exploring USDA data on <a href="https://www.fns.usda.gov/snap/qc" target="_blank" rel="noopener noreferrer">SNAP quality control measures</a>. This dashboard shows examples on how to use <a href="https://github.com/leppekja/SNAP-performance-indicators" target="_blank" rel="noopener noreferrer">published data</a> while highlighting its limitations.</p>
 <h2 id="the-benefits-and-costs-of-snap" tabindex="-1"><a class="observablehq-header-anchor" href="#the-benefits-and-costs-of-snap">The Benefits &amp; Costs of SNAP</a></h2>
+<p>Let's start with a quick overview of SNAP for context. We'll update some charts from the <a href="https://www.ers.usda.gov/topics/food-nutrition-assistance/supplemental-nutrition-assistance-program-snap/key-statistics-and-research/" target="_blank" rel="noopener noreferrer">USDA economic Research Service Key Statistics page</a> to start with.</p>
 <p>As of writing this in the Fall of 2024, debate continues on renewing the 2018 Farm Bill, of which SNAP funding accounts for the majority of the costs.</p>
 <div class="grid grid-cols-2">
 <div class="card">
-<h1><observablehq-loading></observablehq-loading><!--:42ce4119:--></h1> million average monthly participants benefited from SNAP in 2023
+<h1><observablehq-loading></observablehq-loading><!--:42ce4119:--></h1> million average monthly participants benefited from SNAP in FY 2023
 </div>
 <div class="card">
-<h1>$<observablehq-loading></observablehq-loading><!--:d588a046:--></h1> billion dollars spent on SNAP in 2023 (in 2023 dollars)
+<h1>$<observablehq-loading></observablehq-loading><!--:d588a046:--></h1> billion dollars spent on SNAP in FY 2023 (in 2023 dollars)
 </div>
 </div>
 <div class="grid grid-cols-2">
@@ -206,7 +201,7 @@ resize((width) => enrollmentByState(snapByState, grid))
 <hr>
 <h2 id="where-are-snap-benefits-distributed-to" tabindex="-1"><a class="observablehq-header-anchor" href="#where-are-snap-benefits-distributed-to">Where are SNAP benefits distributed to?</a></h2>
 <div class="grid grid-cols-3" style="grid-auto-rows: auto;">
-<p>Participation in the SNAP program varies by state. Utah had the <a href="https://kslnewsradio.com/utah/thousands-of-eligible-older-utahns-not-enrolled-for-snap/2130363/" target="_blank" rel="noopener noreferrer">lowest enrollment rate nationally</a>, while New Mexico stands out with nearly 1 in 4 people receiving SNAP benefits at some point in 2023.<br><br> In general, the mid-northwest region of the United States holds lower participation rates than the rest of the country.<br><br>The <a href="https://www.cbpp.org/research/a-closer-look-at-who-benefits-from-snap-state-by-state-fact-sheets" target="_blank" rel="noopener noreferrer">Center on Budget and Policy Priorities also provides state-by-state fact sheets</a>, although only up to FY 2022 SNAP data.</p>
+<p>Participation in the SNAP program varies by state. Utah had the <a href="https://kslnewsradio.com/utah/thousands-of-eligible-older-utahns-not-enrolled-for-snap/2130363/" target="_blank" rel="noopener noreferrer">lowest enrollment rate nationally</a>, while New Mexico stands out with nearly 1 in 4 people receiving SNAP benefits at some point in FY 2023.<br><br> In general, the mid-northwest region of the United States holds lower participation rates than the rest of the country.<br><br>The <a href="https://www.cbpp.org/research/a-closer-look-at-who-benefits-from-snap-state-by-state-fact-sheets" target="_blank" rel="noopener noreferrer">Center on Budget and Policy Priorities also provides state-by-state fact sheets</a>, although only up to FY 2022 SNAP data.</p>
 <div class="card grid-colspan-2">
   <observablehq-loading></observablehq-loading><!--:19d45931:-->
 </div>
@@ -221,11 +216,48 @@ resize((width) => enrollmentByState(snapByState, grid))
 <hr>
 <h2 id="the-quality-control-process" tabindex="-1"><a class="observablehq-header-anchor" href="#the-quality-control-process">The Quality Control Process</a></h2>
 <p>With the SNAP program reaching tens of millions of Americans each year, and the costs increasing, how does the USDA make sure that the program runs well?</p>
-<p>We'll walk through three quality control measurements that the USDA publishes: payment error rates, case and procedural error rates, and application processing timeliness rates.</p>
-<p>These are determined through sampling about 75,000 cases per year - if you're interested, you can <a href="https://www.fns.usda.gov/snap/qc/database" target="_blank" rel="noopener noreferrer">download quality control data</a> from the USDA.</p>
+<p>According to the USDA, the <a href="https://www.fns.usda.gov/snap/supplemental-nutrition-assistance-program" target="_blank" rel="noopener noreferrer">Supplemental Nutrition Assistance Program</a> implements a <a href="https://www.fns.usda.gov/snap/qc" target="_blank" rel="noopener noreferrer">quality control system</a> with the following aims:</p>
+<ul>
+<li>to measure the accuracy of states’ SNAP eligibility and benefit determinations</li>
+<li>to identify and correct errors in eligibility and benefit calculations</li>
+</ul>
+<p>The USDA publishes this data on their website, and I've compilied it into a <a href="https://github.com/leppekja/SNAP-performance-indicators" target="_blank" rel="noopener noreferrer">repository here</a>. This dashboard will explore that data to and see what we can learn about SNAP benefits, while pointing out ways in which the data can be misinterpreted.</p>
+<p>We'll walk through four quality control measurements that the USDA publishes: <i>payment error rates, case and procedural error rates</i>, and <i>application processing timeliness rates</i>. We'll also take a look at the <i>Program Access Index</i> that the USDA publishes as well. From <a href="https://www.fns.usda.gov/snap/qc" target="_blank" rel="noopener noreferrer">the USDA definitions</a>:</p>
+<div class="grid grid-cols-4">
+<div class="card">
+<h2>Payment Error Rate (PER)</h2>
+<h3>The national payment error rate in FY 2023 waas 11.68%.</h3>
+<p>measures how accurately a state agency determined SNAP eligibility and benefit amounts for those who participate in SNAP.</p>
+<p><i>Errors include both overpayments -- when households receive more benefits than they are entitled to – and underpayments – when households receive less benefits than they are entitled to.</i></p>
+</div>
+<div class="card">
+<h2>Case &amp; Procedural Error Rate</h2>
+<h3>In FY 2023, 44.5% of cases with denials, suspensions, or terminiations had an issue with accuracy or timeliness.</h3>
+<p>assesses the accuracy of state agency actions in cases in which applicants were denied, terminated, or suspended and did not receive benefits.</p>
+<p><i>It also measures a state's compliance with federal procedural requirements, including the timeliness and accuracy of notifications sent to affected households.</i></p>
+</div>
+<div class="card">
+<h2>Application Processing Timeliness (APT)</h2>
+<h3>States processed an average of 80.7% applications on time in FY 2023.</h3>
+<p>measures the timeliness of states’ processing of initial SNAP applications.</p>
+<p><i>The Food and Nutrition Act of 2008 entitles all eligible households to SNAP benefits within 30 days of application, or within 7 days, if they are eligible for expedited service.</i></p>
+</div>
+<div class="card">
+<h2>Program Access Index (PAI)</h2>
+<h3>The national ratio of people that participated in SNAP to the estimated number of SNAP-eligible people was .8 in FY 2023.</h3>
+<p>indicate[s] the degree to which low-income people have access to SNAP benefits.</p>
+<p><i>The PAI compares a state’s average monthly SNAP participation to the number of residents with incomes below 125% of the federal poverty line.</i></p>
+</div>
+</div>
+<p>These are determined through sampling about 50,000 cases per year - if you're interested, you can <a href="https://www.fns.usda.gov/snap/qc/database" target="_blank" rel="noopener noreferrer">download quality control data</a> from the USDA. If not, continue on to see breakdowns of each quality control measure.</p>
+<details>
+  <summary>Notes on <i>National Rates across QC measures</i>
+  </summary>
+  Published and calculated rates includes Guam, Virgin Islands, and the District of Columbia in national rates.
+</details>
 </main>
 <footer id="observablehq-footer">
 <nav><a rel="next" href="./payment-error-rates"><span>Do states accurately determine eligibility and benefits?</span></a></nav>
-<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2025-01-20T18:47:47">Jan 20, 2025</a>.</div>
+<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2025-02-09T21:24:39">Feb 9, 2025</a>.</div>
 </footer>
 </div>
