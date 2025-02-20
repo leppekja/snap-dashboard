@@ -13,12 +13,14 @@
 <link rel="modulepreload" href="./_observablehq/stdlib.bb0de5c5.js">
 <link rel="modulepreload" href="./_import/components/responseToRecessions.8eb15829.js">
 <link rel="modulepreload" href="./_import/components/CboProjectionRelativeDivergingBar.b13fe839.js">
+<link rel="modulepreload" href="./_import/components/monthlyPersonsEnrollmentAllTime.ec741002.js">
 <link rel="modulepreload" href="./_npm/@observablehq/plot@0.6.16/75abcbb5.js">
+<link rel="modulepreload" href="./_npm/d3-array@3.2.4/37839b6a.js">
 <link rel="modulepreload" href="./_npm/d3-dsv@3.0.1/407f7a1f.js">
 <link rel="modulepreload" href="./_npm/d3@7.9.0/0441914a.js">
 <link rel="modulepreload" href="./_npm/isoformat@0.2.1/c68fbd73.js">
 <link rel="modulepreload" href="./_npm/interval-tree-1d@1.0.4/a62ae5ce.js">
-<link rel="modulepreload" href="./_npm/d3-array@3.2.4/37839b6a.js">
+<link rel="modulepreload" href="./_npm/internmap@2.0.3/5eed35fd.js">
 <link rel="modulepreload" href="./_npm/d3-axis@3.0.0/d44feff9.js">
 <link rel="modulepreload" href="./_npm/d3-brush@3.0.0/6495590f.js">
 <link rel="modulepreload" href="./_npm/d3-chord@3.0.1/84d7b8e9.js">
@@ -48,7 +50,6 @@
 <link rel="modulepreload" href="./_npm/d3-transition@3.0.1/0c259fbf.js">
 <link rel="modulepreload" href="./_npm/d3-zoom@3.0.0/da4a6ccc.js">
 <link rel="modulepreload" href="./_npm/binary-search-bounds@2.0.5/1ee6c50d.js">
-<link rel="modulepreload" href="./_npm/internmap@2.0.3/5eed35fd.js">
 <link rel="modulepreload" href="./_npm/delaunator@5.0.1/e67acb27.js">
 <link rel="modulepreload" href="./_npm/robust-predicates@3.0.2/8ac9039b.js">
 <link rel="icon" href="./_file/observable.1af93621.png" type="image/png" sizes="32x32">
@@ -57,13 +58,13 @@
 import {define} from "./_observablehq/client.d8bdb03f.js";
 import {registerFile} from "./_observablehq/stdlib.bb0de5c5.js";
 
-registerFile("./data/snap-monthly.csv", {"name":"./data/snap-monthly.csv","mimeType":"text/csv","path":"./_file/data/snap-monthly.79d5658e.csv","lastModified":1735446817413,"size":9958});
+registerFile("./data/snap-monthly.csv", {"name":"./data/snap-monthly.csv","mimeType":"text/csv","path":"./_file/data/snap-monthly.11b28aa1.csv","lastModified":1740013602872,"size":905573});
 registerFile("./data/snap_participation_and_spending_with_projections.csv", {"name":"./data/snap_participation_and_spending_with_projections.csv","mimeType":"text/csv","path":"./_file/data/snap_participation_and_spending_with_projections.3e8f7e4c.csv","lastModified":1727659167606,"size":774});
 
-define({id: "a8cf44a4", outputs: ["responseToRecessions","CboProjectionRelativeDivergingBar"], body: async () => {
-const [{responseToRecessions}, {CboProjectionRelativeDivergingBar}] = await Promise.all([import("./_import/components/responseToRecessions.8eb15829.js"), import("./_import/components/CboProjectionRelativeDivergingBar.b13fe839.js")]);
+define({id: "a0eefefa", outputs: ["responseToRecessions","CboProjectionRelativeDivergingBar","monthlyPersonsEnrollmentAllTimeChart"], body: async () => {
+const [{responseToRecessions}, {CboProjectionRelativeDivergingBar}, {monthlyPersonsEnrollmentAllTimeChart}] = await Promise.all([import("./_import/components/responseToRecessions.8eb15829.js"), import("./_import/components/CboProjectionRelativeDivergingBar.b13fe839.js"), import("./_import/components/monthlyPersonsEnrollmentAllTime.ec741002.js")]);
 
-return {responseToRecessions,CboProjectionRelativeDivergingBar};
+return {responseToRecessions,CboProjectionRelativeDivergingBar,monthlyPersonsEnrollmentAllTimeChart};
 }});
 
 define({id: "c546bbab", inputs: ["FileAttachment"], outputs: ["snapCostsAndParticipation","snapMonthly"], body: (FileAttachment) => {
@@ -76,31 +77,8 @@ const snapMonthly = FileAttachment("./data/snap-monthly.csv").csv({
 return {snapCostsAndParticipation,snapMonthly};
 }});
 
-define({id: "c428cc03", outputs: ["notes"], body: () => {
-const notes = [
-  [
-    {
-      year: new Date(2005, 9, 1),
-      rate: 32,
-      note: "The Gulf Coast Hurricanes in 2005 \ncaused a large short-term increase.↴",
-    },
-  ],
-  [
-    {
-      year: new Date(2017, 10, 1),
-      rate: 40,
-      note: "More hurricanes ↑",
-    },
-  ],
-  [
-    {
-      year: new Date(2020, 4, 1),
-      rate: 35,
-      note: "↑ The impact of \nthe COVID-19 pandemic",
-    },
-  ],
-];
-return {notes};
+define({id: "b6da4840", inputs: ["snapMonthly"], body: (snapMonthly) => {
+console.log(snapMonthly);
 }});
 
 define({id: "0417beb9", mode: "inline", inputs: ["resize","responseToRecessions","snapCostsAndParticipation","display"], body: async (resize,responseToRecessions,snapCostsAndParticipation,display) => {
@@ -109,43 +87,9 @@ resize((width) => responseToRecessions(snapCostsAndParticipation, width))
 ))
 }});
 
-define({id: "6fa6bb28", mode: "inline", inputs: ["resize","Plot","snapMonthly","notes","display"], body: async (resize,Plot,snapMonthly,notes,display) => {
+define({id: "0f3fb7a7", mode: "inline", inputs: ["resize","monthlyPersonsEnrollmentAllTimeChart","snapMonthly","display"], body: async (resize,monthlyPersonsEnrollmentAllTimeChart,snapMonthly,display) => {
 display(await(
-resize((width) => Plot.plot({
-  width,
-  x: { label: "Year" },
-  y: { label: "millions of people", grid: true },
-  title: "Monthly SNAP participation data shows the effect of short-term disasters on enrollment",
-  subtitle: "February 2019 saw benefits be distributed in Jan 2019 to avoid a government shutdown, causing an aberration in the data.",
-  marks: [
-    Plot.lineY(snapMonthly.filter(d => new Date(d.fiscal_year_month) < new Date(2024, 7, 1)).map(d => {
-      return {...d, personsInMils: d.persons / 1000000}
-    }), {
-        x: "fiscal_year_month",
-        y: "personsInMils",
-        tip: true
-      },),
-      Plot.text(notes[0], {
-        x: "year",
-        y: "rate",
-        text: "note",
-        textAnchor: "end",
-        href: d => `https://www.ers.usda.gov/publications/pub-details/?pubid=45758`
-      }),
-      Plot.text(notes[1], {
-        x: "year",
-        y: "rate",
-        text: "note",
-        textAnchor: "end",
-        href: d => `https://frac.org/research/resource-library/snap-monthly-data-2017`
-      }),
-      Plot.text(notes[2], {
-        x: "year",
-        y: "rate",
-        text: "note",
-        textAnchor: "start",
-      })
-  ]}))
+resize((width) => monthlyPersonsEnrollmentAllTimeChart(snapMonthly, width))
 ))
 }});
 
@@ -177,9 +121,9 @@ resize((width) => Plot.plot({
 </aside>
 <div id="observablehq-center">
 <main id="observablehq-main" class="observablehq">
-<div class="observablehq observablehq--block"><!--:a8cf44a4:--></div>
+<div class="observablehq observablehq--block"><!--:a0eefefa:--></div>
 <div class="observablehq observablehq--block"><!--:c546bbab:--></div>
-<div class="observablehq observablehq--block"><!--:c428cc03:--></div>
+<div class="observablehq observablehq--block"><!--:b6da4840:--></div>
 <h1 id="how-does-snap-enrollment-change-after-economic-downturns" tabindex="-1"><a class="observablehq-header-anchor" href="#how-does-snap-enrollment-change-after-economic-downturns">How does SNAP enrollment change after economic downturns?</a></h1>
 <p>Ongoing debate is focused around policies that intentionally decrease enrollment, such as employment requirements, and cut costs, like limiting benefit amounts. How should we expect enrollment to change naturally during periods when the economy improves?</p>
 <p>SNAP is a <i>countercyclical</i> assistance program, meaning that the enrollment will likely rise in response to disasters or economic recessions. The USDA released a report in September 2012 entitled <a href="https://www.ers.usda.gov/publications/pub-details/?pubid=43668" target="_blank" rel="noopener noreferrer">How Economic Conditions Affect Participation in USDA Nutrition Assistance Programs</a> that we'll use as a starting point.</p>
@@ -200,8 +144,7 @@ ${resize((width) => CboProjectionRelativeDivergingBar(snapCostsAndParticipation,
 </div> -->
 <p>So we shouldn't expect SNAP enrollment to immediately drop after economic crises. One exception to this is natural disasters, which we can see in the monthly participation data.</p>
 <div class="card">
-<!-- https://talk.observablehq.com/t/is-there-a-way-to-associate-hyperlink-to-plot-text/7881/4 -->
-<observablehq-loading></observablehq-loading><!--:6fa6bb28:-->
+<observablehq-loading></observablehq-loading><!--:0f3fb7a7:-->
 </div>
 <details>
 <summary>Official USDA note on the drop in Feb. 2019</summary>
@@ -210,6 +153,6 @@ ${resize((width) => CboProjectionRelativeDivergingBar(snapCostsAndParticipation,
 </div></main>
 <footer id="observablehq-footer">
 <nav><a rel="prev" href="./payment-error-rates"><span>Do states accurately determine eligibility and benefits?</span></a></nav>
-<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2025-02-09T21:24:39">Feb 9, 2025</a>.</div>
+<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2025-02-19T20:46:48">Feb 19, 2025</a>.</div>
 </footer>
 </div>

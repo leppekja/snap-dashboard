@@ -6,6 +6,7 @@ theme: dashboard
 ```js
 import { responseToRecessions } from "./components/responseToRecessions.js";
 import { CboProjectionRelativeDivergingBar } from "./components/CboProjectionRelativeDivergingBar.js";
+import { monthlyPersonsEnrollmentAllTimeChart } from "./components/monthlyPersonsEnrollmentAllTime.js";
 ```
 
 ```js
@@ -18,29 +19,7 @@ const snapMonthly = FileAttachment("data/snap-monthly.csv").csv({
 ```
 
 ```js
-const notes = [
-  [
-    {
-      year: new Date(2005, 9, 1),
-      rate: 32,
-      note: "The Gulf Coast Hurricanes in 2005 \ncaused a large short-term increase.↴",
-    },
-  ],
-  [
-    {
-      year: new Date(2017, 10, 1),
-      rate: 40,
-      note: "More hurricanes ↑",
-    },
-  ],
-  [
-    {
-      year: new Date(2020, 4, 1),
-      rate: 35,
-      note: "↑ The impact of \nthe COVID-19 pandemic",
-    },
-  ],
-];
+console.log(snapMonthly);
 ```
 
 # How does SNAP enrollment change after economic downturns?
@@ -70,42 +49,7 @@ ${resize((width) => CboProjectionRelativeDivergingBar(snapCostsAndParticipation,
 So we shouldn't expect SNAP enrollment to immediately drop after economic crises. One exception to this is natural disasters, which we can see in the monthly participation data.
 
 <div class="card">
-<!-- https://talk.observablehq.com/t/is-there-a-way-to-associate-hyperlink-to-plot-text/7881/4 -->
-${resize((width) => Plot.plot({
-  width,
-  x: { label: "Year" },
-  y: { label: "millions of people", grid: true },
-  title: "Monthly SNAP participation data shows the effect of short-term disasters on enrollment",
-  subtitle: "February 2019 saw benefits be distributed in Jan 2019 to avoid a government shutdown, causing an aberration in the data.",
-  marks: [
-    Plot.lineY(snapMonthly.filter(d => new Date(d.fiscal_year_month) < new Date(2024, 7, 1)).map(d => {
-      return {...d, personsInMils: d.persons / 1000000}
-    }), {
-        x: "fiscal_year_month",
-        y: "personsInMils",
-        tip: true
-      },),
-      Plot.text(notes[0], {
-        x: "year",
-        y: "rate",
-        text: "note",
-        textAnchor: "end",
-        href: d => `https://www.ers.usda.gov/publications/pub-details/?pubid=45758`
-      }),
-      Plot.text(notes[1], {
-        x: "year",
-        y: "rate",
-        text: "note",
-        textAnchor: "end",
-        href: d => `https://frac.org/research/resource-library/snap-monthly-data-2017`
-      }),
-      Plot.text(notes[2], {
-        x: "year",
-        y: "rate",
-        text: "note",
-        textAnchor: "start",
-      })
-  ]}))}
+${resize((width) => monthlyPersonsEnrollmentAllTimeChart(snapMonthly, width))}
 </div>
 
 <details>

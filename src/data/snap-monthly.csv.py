@@ -90,5 +90,5 @@ if __name__ == "__main__":
     
     csv_data["fiscal_year_month"] = pd.to_datetime(csv_data["fiscal_year_month"], format="%b %Y").dt.strftime("%Y-%m-%d")    
     csv_data = csv_data.replace("--", 0)
-    csv_data = csv_data.groupby("fiscal_year_month")['persons'].sum().reset_index()
+    csv_data = csv_data.groupby(["state", "fiscal_year_month"]).sum().reset_index()
     csv_data.to_csv(sys.stdout, index=False, line_terminator='\n')

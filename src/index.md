@@ -93,12 +93,14 @@ See the [How does SNAP enrollment change after economic downturns](http://127.0.
 
 <div class="grid grid-cols-3" style="grid-auto-rows: auto;">
 
-Participation in the SNAP program varies by state. Utah had the [lowest enrollment rate nationally](https://kslnewsradio.com/utah/thousands-of-eligible-older-utahns-not-enrolled-for-snap/2130363/), while New Mexico stands out with nearly 1 in 4 people receiving SNAP benefits at some point in FY 2023.<br><br> In general, the mid-northwest region of the United States holds lower participation rates than the rest of the country.<br><br>The [Center on Budget and Policy Priorities also provides state-by-state fact sheets](https://www.cbpp.org/research/a-closer-look-at-who-benefits-from-snap-state-by-state-fact-sheets), although only up to FY 2022 SNAP data.
+Participation in the SNAP program varies widely by state. Utah had the [lowest enrollment rate nationally](https://kslnewsradio.com/utah/thousands-of-eligible-older-utahns-not-enrolled-for-snap/2130363/), while New Mexico stands out with nearly 1 in 4 people receiving SNAP benefits at some point in FY 2023.<br><br> In general, the mid-northwest region of the United States holds lower participation rates than the rest of the country.<br><br>The [Center on Budget and Policy Priorities also provides state-by-state fact sheets](https://www.cbpp.org/research/a-closer-look-at-who-benefits-from-snap-state-by-state-fact-sheets), although only up to FY 2022 SNAP data.
 
 <div class="card grid-colspan-2">
   ${resize((width) => enrollmentByState(snapByState, grid))}
 </div>
 </div>
+
+Remember that the participation rate reflects the entire population of the state, not of the total SNAP-eligible population. That's estimated through the Program Access Index measure. For example, a low participation rate could reflect a state enforcing stricter eligibility criteria and not doing outreach to eligible citizens.
 
 ---
 
