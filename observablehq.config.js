@@ -14,6 +14,10 @@ export default {
           name: "Do states accurately determine eligibility and benefits?",
           path: "/payment-error-rates",
         },
+        {
+          name: "Do states process applications quickly enough for federal standards?",
+          path: "/application-processing-timeliness",
+        },
       ],
     },
     {
