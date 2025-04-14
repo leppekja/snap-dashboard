@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="generator" content="Observable Framework v1.11.0">
+<title>Application Processing Timeliness | SNAP Performance Indicators</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&amp;display=swap" crossorigin>
+<link rel="preload" as="style" href="./_observablehq/theme-air,near-midnight,alt,wide.f6ca92af.css">
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&amp;display=swap" crossorigin>
+<link rel="stylesheet" type="text/css" href="./_observablehq/theme-air,near-midnight,alt,wide.f6ca92af.css">
+<link rel="modulepreload" href="./_observablehq/client.d8bdb03f.js">
+<link rel="modulepreload" href="./_observablehq/runtime.4471fcf4.js">
+<link rel="modulepreload" href="./_observablehq/stdlib.bb0de5c5.js">
+<link rel="modulepreload" href="./_import/components/applicationProcessingTimeliness.56476175.js">
+<link rel="modulepreload" href="./_npm/@observablehq/plot@0.6.16/75abcbb5.js">
+<link rel="modulepreload" href="./_npm/d3@7.9.0/0441914a.js">
+<link rel="modulepreload" href="./_npm/htl@0.3.1/063eb405.js">
+<link rel="modulepreload" href="./_npm/d3-dsv@3.0.1/407f7a1f.js">
+<link rel="modulepreload" href="./_npm/isoformat@0.2.1/c68fbd73.js">
+<link rel="modulepreload" href="./_npm/interval-tree-1d@1.0.4/a62ae5ce.js">
+<link rel="modulepreload" href="./_npm/d3-array@3.2.4/37839b6a.js">
+<link rel="modulepreload" href="./_npm/d3-axis@3.0.0/d44feff9.js">
+<link rel="modulepreload" href="./_npm/d3-brush@3.0.0/6495590f.js">
+<link rel="modulepreload" href="./_npm/d3-chord@3.0.1/84d7b8e9.js">
+<link rel="modulepreload" href="./_npm/d3-color@3.1.0/2c0cdfa2.js">
+<link rel="modulepreload" href="./_npm/d3-contour@4.0.2/d496a3b3.js">
+<link rel="modulepreload" href="./_npm/d3-delaunay@6.0.4/00c41b5d.js">
+<link rel="modulepreload" href="./_npm/d3-dispatch@3.0.1/b5f7cdc6.js">
+<link rel="modulepreload" href="./_npm/d3-drag@3.0.0/ef06b1ff.js">
+<link rel="modulepreload" href="./_npm/d3-ease@3.0.1/6f15f633.js">
+<link rel="modulepreload" href="./_npm/d3-fetch@3.0.1/35880c2a.js">
+<link rel="modulepreload" href="./_npm/d3-force@3.0.0/60bb70b3.js">
+<link rel="modulepreload" href="./_npm/d3-format@3.1.0/5851d7ef.js">
+<link rel="modulepreload" href="./_npm/d3-geo@3.1.1/5e427f4b.js">
+<link rel="modulepreload" href="./_npm/d3-hierarchy@3.1.2/f1db2593.js">
+<link rel="modulepreload" href="./_npm/d3-interpolate@3.0.1/034b7bcb.js">
+<link rel="modulepreload" href="./_npm/d3-path@3.1.0/4bb53638.js">
+<link rel="modulepreload" href="./_npm/d3-polygon@3.0.1/bbafde58.js">
+<link rel="modulepreload" href="./_npm/d3-quadtree@3.0.1/aa5b35a8.js">
+<link rel="modulepreload" href="./_npm/d3-random@3.0.1/32c7fec2.js">
+<link rel="modulepreload" href="./_npm/d3-scale@4.0.2/2d9e63f3.js">
+<link rel="modulepreload" href="./_npm/d3-scale-chromatic@3.1.0/cf9b720b.js">
+<link rel="modulepreload" href="./_npm/d3-selection@3.0.0/a4e530fb.js">
+<link rel="modulepreload" href="./_npm/d3-shape@3.2.0/be692bd9.js">
+<link rel="modulepreload" href="./_npm/d3-time@3.1.0/3a9ac1c1.js">
+<link rel="modulepreload" href="./_npm/d3-time-format@4.1.0/28d1ef76.js">
+<link rel="modulepreload" href="./_npm/d3-timer@3.0.1/f31b5398.js">
+<link rel="modulepreload" href="./_npm/d3-transition@3.0.1/0c259fbf.js">
+<link rel="modulepreload" href="./_npm/d3-zoom@3.0.0/da4a6ccc.js">
+<link rel="modulepreload" href="./_npm/binary-search-bounds@2.0.5/1ee6c50d.js">
+<link rel="modulepreload" href="./_npm/internmap@2.0.3/5eed35fd.js">
+<link rel="modulepreload" href="./_npm/delaunator@5.0.1/e67acb27.js">
+<link rel="modulepreload" href="./_npm/robust-predicates@3.0.2/8ac9039b.js">
+<link rel="icon" href="./_file/observable.1af93621.png" type="image/png" sizes="32x32">
+<script type="module">
+
+import {define} from "./_observablehq/client.d8bdb03f.js";
+import {registerFile} from "./_observablehq/stdlib.bb0de5c5.js";
+
+registerFile("./data/aptData.csv", {"name":"./data/aptData.csv","mimeType":"text/csv","path":"./_file/data/aptData.35658e3f.csv","lastModified":1740188298336,"size":68649});
+
+define({id: "e14d20cd", outputs: ["applicationProcessingTimelinessChart","totalStatesTimelyChart"], body: async () => {
+const {applicationProcessingTimelinessChart, totalStatesTimelyChart} = await import("./_import/components/applicationProcessingTimeliness.56476175.js");
+
+return {applicationProcessingTimelinessChart,totalStatesTimelyChart};
+}});
+
+define({id: "3cf362ad", inputs: ["FileAttachment"], outputs: ["aptData"], body: (FileAttachment) => {
+const aptData = FileAttachment("./data/aptData.csv").csv({ typed: true });
+return {aptData};
+}});
+
+define({id: "5d8e3372", mode: "inline", inputs: ["resize","totalStatesTimelyChart","aptData","display"], body: async (resize,totalStatesTimelyChart,aptData,display) => {
+display(await(
+resize((width) => totalStatesTimelyChart(aptData, width))
+))
+}});
+
+define({id: "9e86a632", mode: "inline", inputs: ["resize","applicationProcessingTimelinessChart","aptData","display"], body: async (resize,applicationProcessingTimelinessChart,aptData,display) => {
+display(await(
+resize((width) => applicationProcessingTimelinessChart(aptData, width))
+))
+}});
+
+</script>
+<input id="observablehq-sidebar-toggle" type="checkbox" title="Toggle sidebar">
+<label id="observablehq-sidebar-backdrop" for="observablehq-sidebar-toggle"></label>
+<nav id="observablehq-sidebar">
+  <ol>
+    <label id="observablehq-sidebar-close" for="observablehq-sidebar-toggle"></label>
+    <li class="observablehq-link"><a href="./">SNAP Performance Indicators</a></li>
+  </ol>
+  <section class="observablehq-section-active">
+    <summary>Performance Indicators</summary>
+    <ol>
+    <li class="observablehq-link"><a href="./payment-error-rates">Do states accurately determine eligibility and benefits?</a></li>
+    <li class="observablehq-link observablehq-link-active"><a href="./application-processing-timeliness">Do states process applications quickly enough for federal standards?</a></li>
+    </ol>
+  </section>
+  <section>
+    <summary>Other Questions</summary>
+    <ol>
+    <li class="observablehq-link"><a href="./enrollment">How does SNAP enrollment change after economic downturns?</a></li>
+    </ol>
+  </section>
+</nav>
+<script>{Object.assign(document.createElement("a"),{href:""}).password&&location.replace(location.href);const e=document.querySelector("#observablehq-sidebar"),t=document.querySelector("#observablehq-sidebar-toggle"),r=sessionStorage.getItem("observablehq-sidebar");r?t.checked=r==="true":t.indeterminate=!0;for(const o of document.querySelectorAll("#observablehq-sidebar summary")){const s=o.parentElement;switch(sessionStorage.getItem(`observablehq-sidebar:${o.textContent}`)){case"true":s.open=!0;break;case"false":s.classList.contains("observablehq-section-active")||(s.open=!1);break}}addEventListener("beforeunload",()=>sessionStorage.setItem("observablehq-sidebar-scrolly",`${e.scrollTop}`));const a=sessionStorage.getItem("observablehq-sidebar-scrolly");a!=null&&(e.style.cssText="overflow: hidden;",e.scrollTop=+a,e.style.cssText="");}</script>
+<aside id="observablehq-toc" data-selector="h1:not(:first-of-type)[id], h2:first-child[id], :not(h1) + h2[id]">
+<nav>
+</nav>
+</aside>
+<div id="observablehq-center">
+<main id="observablehq-main" class="observablehq">
+<div class="observablehq observablehq--block"><!--:e14d20cd:--></div>
+<div class="observablehq observablehq--block"><!--:3cf362ad:--></div>
+<h1 id="application-processing-timeliness" tabindex="-1"><a class="observablehq-header-anchor" href="#application-processing-timeliness">Application Processing Timeliness</a></h1>
+<p>If a household is eligible for SNAP benefits, states agencies are required to process your case within 30 days of application, or within 7 days for households eligible for expedited service.</p>
+<p>The <a href="https://www.fns.usda.gov/snap/qc/timeliness" target="_blank" rel="noopener noreferrer">Application Processing Timeliness Rate</a> compares how many applications are approved within the time limit out of the total number of received applications.</p>
+<div class="card">
+  <observablehq-loading></observablehq-loading><!--:5d8e3372:-->
+</div>
+<p>Not meeting these guidelines may result in losing federal funding.</p>
+<div class="card">
+<h2>Published annual Application Timeliness Rates for each state are consistently under the 95% benchmark for timeliness.</h2>
+<observablehq-loading></observablehq-loading><!--:9e86a632:-->
+</div>
+<details>
+  <summary>Notes on <i>Application Timeliness By Year and State</i>
+  </summary>
+<p>Note again the missing data from 2020 and 2021, where this reporting requirement was suspended.</p>
+<p>FNS <a href="https://www.fns.usda.gov/snap/qc/timeliness/fy23" target="_blank" rel="noopener noreferrer">provides a disclaimer</a> about using this as a regulatory compliance measure: A case may be coded as untimely even if the delay was caused by the applicant, unless the status of the case is properly flagged.</p>
+</details>
+<p>While the USDA publishes these annual APT rates for each state, in practice they seem to <a href="https://www.fns.usda.gov/snap/admin/improving-state-timeliness-rates-escalation-process-guidance" target="_blank" rel="noopener noreferrer">track quarterly rates</a> for their review process. This reporting lag alongside the difference in time periods used to measure compliance versus public reporting limits the usefulness of these annual numbers.</p>
+<p>For example, a USDA notice released April 1, 2025 to state agencies indicated 33 states are currently out of compliance; knowing this as a member of the public only seems to occur when the USDA sends one of these official notices. Are state agencies releasing quality control data more frequently to the public?</p>
+</main>
+<footer id="observablehq-footer">
+<nav><a rel="prev" href="./payment-error-rates"><span>Do states accurately determine eligibility and benefits?</span></a><a rel="next" href="./enrollment"><span>How does SNAP enrollment change after economic downturns?</span></a></nav>
+<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2025-04-13T20:57:41">Apr 13, 2025</a>.</div>
+</footer>
+</div>
