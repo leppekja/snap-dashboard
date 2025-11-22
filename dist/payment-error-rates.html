@@ -13,7 +13,7 @@
 <link rel="modulepreload" href="./_observablehq/client.d8bdb03f.js">
 <link rel="modulepreload" href="./_observablehq/runtime.4471fcf4.js">
 <link rel="modulepreload" href="./_observablehq/stdlib.bb0de5c5.js">
-<link rel="modulepreload" href="./_import/components/payment_error_rate.fdd4b729.js">
+<link rel="modulepreload" href="./_import/components/payment_error_rate.9c745eb2.js">
 <link rel="modulepreload" href="./_npm/@observablehq/plot@0.6.16/75abcbb5.js">
 <link rel="modulepreload" href="./_observablehq/stdlib/inputs.baa9c6bc.js">
 <link rel="modulepreload" href="./_npm/d3-dsv@3.0.1/407f7a1f.js">
@@ -64,7 +64,7 @@ registerFile("./data/snap.csv", {"name":"./data/snap.csv","mimeType":"text/csv",
 registerFile("./data/snap_participation_and_spending_with_projections.csv", {"name":"./data/snap_participation_and_spending_with_projections.csv","mimeType":"text/csv","path":"./_file/data/snap_participation_and_spending_with_projections.3e8f7e4c.csv","lastModified":1727659167606,"size":774});
 
 define({id: "f0a10b29", outputs: ["paymentErrorRatesOverTime","paymentErrorStateChange"], body: async () => {
-const {paymentErrorRatesOverTime, paymentErrorStateChange} = await import("./_import/components/payment_error_rate.fdd4b729.js");
+const {paymentErrorRatesOverTime, paymentErrorStateChange} = await import("./_import/components/payment_error_rate.9c745eb2.js");
 
 return {paymentErrorRatesOverTime,paymentErrorStateChange};
 }});
@@ -154,10 +154,10 @@ resize((width) => paymentErrorRatesOverTime(data, state, width))
 <p>States may adopt certain waivers or procedures which limit the possibility for errors entirely, as well, like <a href="https://www.fns.usda.gov/snap/waivers/state-options-report" target="_blank" rel="noopener noreferrer">simplified reporting options</a>, which when initially offered in the 2002 Farm Bill was <a href="https://www.fns.usda.gov/research/snap/effects-simplified-reporting-payment-accuracy" target="_blank" rel="noopener noreferrer">estimated to have a potential effect of -1.2% to 1.5% on the error rate of each state</a>. An example of this might be a taking a standard medical deduction rather than requiring individuals to prove every medical expense.</p>
 <p>Additionally, some states have <a href="https://www.justice.gov/archives/opa/pr/florida-department-children-and-families-agrees-pay-175-million-resolve-false-claims-act" target="_blank" rel="noopener noreferrer">intentionally misreported cases and implemented disallowed policies to lower their error rates</a>.</p>
 <h3 id="should-there-be-a-tolerance-for-errors-at-all" tabindex="-1"><a class="observablehq-header-anchor" href="#should-there-be-a-tolerance-for-errors-at-all">Should there be a tolerance for errors at all?</a></h3>
-<p>Senator Joni Earnst has twice submitted <a href="https://www.ernst.senate.gov/imo/media/doc/snap_back_inaccurate_snap_payments_bill_text.pdf" target="_blank" rel="noopener noreferrer">a bill to reduce the payment error tolerance to zero</a>. We</p>
+<p>Senator Joni Earnst has twice submitted <a href="https://www.ernst.senate.gov/imo/media/doc/snap_back_inaccurate_snap_payments_bill_text.pdf" target="_blank" rel="noopener noreferrer">a bill to reduce the payment error tolerance to zero</a>.</p>
 </main>
 <footer id="observablehq-footer">
 <nav><a rel="prev" href="./"><span>SNAP Performance Indicators</span></a><a rel="next" href="./application-processing-timeliness"><span>Do states process applications quickly enough for federal standards?</span></a></nav>
-<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2025-04-13T20:57:41">Apr 13, 2025</a>.</div>
+<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2025-11-22T08:17:17">Nov 22, 2025</a>.</div>
 </footer>
 </div>

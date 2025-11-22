@@ -1,6 +1,6 @@
-import * as Plot from "npm:@observablehq/plot";
-import * as d3 from "npm:d3";
-import * as htl from "npm:htl";
+import * as Plot from "../../_npm/@observablehq/plot@0.6.16/75abcbb5.js";
+import * as d3 from "../../_npm/d3@7.9.0/0441914a.js";
+import * as htl from "../../_npm/htl@0.3.1/063eb405.js";
 
 export function totalStatesTimelyChart(data, width) {
   const timelyTotalsByYear = data.reduce((acc, d) => {

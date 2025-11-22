@@ -18,10 +18,6 @@ const snapMonthly = FileAttachment("data/snap-monthly.csv").csv({
 });
 ```
 
-```js
-console.log(snapMonthly);
-```
-
 # How does SNAP enrollment change after economic downturns?
 
 Ongoing debate is focused around policies that intentionally decrease enrollment, such as employment requirements, and cut costs, like limiting benefit amounts. How should we expect enrollment to change naturally during periods when the economy improves?

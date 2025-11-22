@@ -38,7 +38,7 @@ const snapCost2023 = snapCostsAndParticipation.filter(
   <h1>Visualizing SNAP Performance Indicators</h1>
 </div>
 
-A work-in-progress as of 2-1-25 exploring USDA data on [SNAP quality control measures](https://www.fns.usda.gov/snap/qc). This dashboard shows examples on how to use [published data](https://github.com/leppekja/SNAP-performance-indicators) while highlighting its limitations.
+A work-in-progress as of 11-22-25 exploring USDA data on [SNAP quality control measures](https://www.fns.usda.gov/snap/qc). This dashboard shows examples on how to use [published data](https://github.com/leppekja/SNAP-performance-indicators) while highlighting its limitations.
 
 ## The Benefits & Costs of SNAP
 
@@ -68,7 +68,7 @@ It's hard to ignore that projections for SNAP enrollment & spending diverge, wit
 
 This is partially due to [changes in how the Thrifty Food Plan is calculated during the Biden administration](https://www.usda.gov/media/press-releases/2021/08/16/usda-modernizes-thrifty-food-plan-updates-snap-benefits) to better reflect increases in the cost of food and modern diet recommendations.
 
-Note that the cost of SNAP benefits are funded by the federal government, but administration costs are split with each state. Each state also has descretion to adjust eligibity past minimum guidelines that the federal goverment sets.
+Note that the cost of SNAP benefits are funded by the federal government, but administration costs are split with each state. Each state also has discretion to adjust eligibity past minimum guidelines that the federal goverment sets.
 
 ---
 

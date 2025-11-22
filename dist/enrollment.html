@@ -77,10 +77,6 @@ const snapMonthly = FileAttachment("./data/snap-monthly.csv").csv({
 return {snapCostsAndParticipation,snapMonthly};
 }});
 
-define({id: "b6da4840", inputs: ["snapMonthly"], body: (snapMonthly) => {
-console.log(snapMonthly);
-}});
-
 define({id: "0417beb9", mode: "inline", inputs: ["resize","responseToRecessions","snapCostsAndParticipation","display"], body: async (resize,responseToRecessions,snapCostsAndParticipation,display) => {
 display(await(
 resize((width) => responseToRecessions(snapCostsAndParticipation, width))
@@ -124,7 +120,6 @@ resize((width) => monthlyPersonsEnrollmentAllTimeChart(snapMonthly, width))
 <main id="observablehq-main" class="observablehq">
 <div class="observablehq observablehq--block"><!--:a0eefefa:--></div>
 <div class="observablehq observablehq--block"><!--:c546bbab:--></div>
-<div class="observablehq observablehq--block"><!--:b6da4840:--></div>
 <h1 id="how-does-snap-enrollment-change-after-economic-downturns" tabindex="-1"><a class="observablehq-header-anchor" href="#how-does-snap-enrollment-change-after-economic-downturns">How does SNAP enrollment change after economic downturns?</a></h1>
 <p>Ongoing debate is focused around policies that intentionally decrease enrollment, such as employment requirements, and cut costs, like limiting benefit amounts. How should we expect enrollment to change naturally during periods when the economy improves?</p>
 <p>SNAP is a <i>countercyclical</i> assistance program, meaning that the enrollment will likely rise in response to disasters or economic recessions. The USDA released a report in September 2012 entitled <a href="https://www.ers.usda.gov/publications/pub-details/?pubid=43668" target="_blank" rel="noopener noreferrer">How Economic Conditions Affect Participation in USDA Nutrition Assistance Programs</a> that we'll use as a starting point.</p>
@@ -154,6 +149,6 @@ ${resize((width) => CboProjectionRelativeDivergingBar(snapCostsAndParticipation,
 </div></main>
 <footer id="observablehq-footer">
 <nav><a rel="prev" href="./application-processing-timeliness"><span>Do states process applications quickly enough for federal standards?</span></a></nav>
-<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2025-04-13T20:57:41">Apr 13, 2025</a>.</div>
+<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2025-11-22T08:17:17">Nov 22, 2025</a>.</div>
 </footer>
 </div>

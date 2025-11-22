@@ -1,6 +1,6 @@
-import * as Plot from "npm:@observablehq/plot";
-import { Generators } from "observablehq:stdlib";
-import * as Inputs from "npm:@observablehq/inputs";
+import * as Plot from "../../_npm/@observablehq/plot@0.6.16/75abcbb5.js";
+import { Generators } from "../../_observablehq/stdlib.bb0de5c5.js";
+import * as Inputs from "../../_observablehq/stdlib/inputs.baa9c6bc.js";
 
 export function paymentErrorRatesOverTime(data, highlight, width) {
   const notes = [

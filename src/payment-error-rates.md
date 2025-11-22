@@ -64,4 +64,4 @@ Additionally, some states have [intentionally misreported cases and implemented 
 
 ### Should there be a tolerance for errors at all?
 
-Senator Joni Earnst has twice submitted [a bill to reduce the payment error tolerance to zero](https://www.ernst.senate.gov/imo/media/doc/snap_back_inaccurate_snap_payments_bill_text.pdf). We
+Senator Joni Earnst has twice submitted [a bill to reduce the payment error tolerance to zero](https://www.ernst.senate.gov/imo/media/doc/snap_back_inaccurate_snap_payments_bill_text.pdf).

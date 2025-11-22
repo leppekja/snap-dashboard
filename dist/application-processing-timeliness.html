@@ -11,7 +11,7 @@
 <link rel="modulepreload" href="./_observablehq/client.d8bdb03f.js">
 <link rel="modulepreload" href="./_observablehq/runtime.4471fcf4.js">
 <link rel="modulepreload" href="./_observablehq/stdlib.bb0de5c5.js">
-<link rel="modulepreload" href="./_import/components/applicationProcessingTimeliness.56476175.js">
+<link rel="modulepreload" href="./_import/components/applicationProcessingTimeliness.67903049.js">
 <link rel="modulepreload" href="./_npm/@observablehq/plot@0.6.16/75abcbb5.js">
 <link rel="modulepreload" href="./_npm/d3@7.9.0/0441914a.js">
 <link rel="modulepreload" href="./_npm/htl@0.3.1/063eb405.js">
@@ -58,16 +58,20 @@ import {define} from "./_observablehq/client.d8bdb03f.js";
 import {registerFile} from "./_observablehq/stdlib.bb0de5c5.js";
 
 registerFile("./data/aptData.csv", {"name":"./data/aptData.csv","mimeType":"text/csv","path":"./_file/data/aptData.35658e3f.csv","lastModified":1740188298336,"size":68649});
+registerFile("./data/snap-monthly.csv", {"name":"./data/snap-monthly.csv","mimeType":"text/csv","path":"./_file/data/snap-monthly.11b28aa1.csv","lastModified":1740013602872,"size":905573});
 
-define({id: "e14d20cd", outputs: ["applicationProcessingTimelinessChart","totalStatesTimelyChart"], body: async () => {
-const {applicationProcessingTimelinessChart, totalStatesTimelyChart} = await import("./_import/components/applicationProcessingTimeliness.56476175.js");
+define({id: "5eeb7d66", outputs: ["applicationProcessingTimelinessChart","totalStatesTimelyChart","enrollmentAgainstTimeliness"], body: async () => {
+const {applicationProcessingTimelinessChart, totalStatesTimelyChart, enrollmentAgainstTimeliness} = await import("./_import/components/applicationProcessingTimeliness.67903049.js");
 
-return {applicationProcessingTimelinessChart,totalStatesTimelyChart};
+return {applicationProcessingTimelinessChart,totalStatesTimelyChart,enrollmentAgainstTimeliness};
 }});
 
-define({id: "3cf362ad", inputs: ["FileAttachment"], outputs: ["aptData"], body: (FileAttachment) => {
+define({id: "ed9f7e0a", inputs: ["FileAttachment"], outputs: ["aptData","enrollmentData"], body: (FileAttachment) => {
 const aptData = FileAttachment("./data/aptData.csv").csv({ typed: true });
-return {aptData};
+const enrollmentData = FileAttachment("./data/snap-monthly.csv").csv({
+  typed: true,
+});
+return {aptData,enrollmentData};
 }});
 
 define({id: "5d8e3372", mode: "inline", inputs: ["resize","totalStatesTimelyChart","aptData","display"], body: async (resize,totalStatesTimelyChart,aptData,display) => {
@@ -79,6 +83,12 @@ resize((width) => totalStatesTimelyChart(aptData, width))
 define({id: "9e86a632", mode: "inline", inputs: ["resize","applicationProcessingTimelinessChart","aptData","display"], body: async (resize,applicationProcessingTimelinessChart,aptData,display) => {
 display(await(
 resize((width) => applicationProcessingTimelinessChart(aptData, width))
+))
+}});
+
+define({id: "85fa2f28", mode: "inline", inputs: ["resize","enrollmentAgainstTimeliness","enrollmentData","aptData","display"], body: async (resize,enrollmentAgainstTimeliness,enrollmentData,aptData,display) => {
+display(await(
+resize((width) => enrollmentAgainstTimeliness(enrollmentData, aptData, width))
 ))
 }});
 
@@ -111,11 +121,13 @@ resize((width) => applicationProcessingTimelinessChart(aptData, width))
 </aside>
 <div id="observablehq-center">
 <main id="observablehq-main" class="observablehq">
-<div class="observablehq observablehq--block"><!--:e14d20cd:--></div>
-<div class="observablehq observablehq--block"><!--:3cf362ad:--></div>
+<div class="observablehq observablehq--block"><!--:5eeb7d66:--></div>
+<div class="observablehq observablehq--block"><!--:ed9f7e0a:--></div>
 <h1 id="application-processing-timeliness" tabindex="-1"><a class="observablehq-header-anchor" href="#application-processing-timeliness">Application Processing Timeliness</a></h1>
 <p>If a household is eligible for SNAP benefits, states agencies are required to process your case within 30 days of application, or within 7 days for households eligible for expedited service.</p>
-<p>The <a href="https://www.fns.usda.gov/snap/qc/timeliness" target="_blank" rel="noopener noreferrer">Application Processing Timeliness Rate</a> compares how many applications are approved within the time limit out of the total number of received applications.</p>
+<p>The <a href="https://www.fns.usda.gov/snap/qc/timeliness" target="_blank" rel="noopener noreferrer">Application Processing Timeliness Rate</a> compares how many applications are approved within the time limit out of the total number of received applications. The USDA reports these rates annually.</p>
+<p>States are expected to process 95% of applications within the time limit to remain in compliance with USDA standards. This processing time can be delayed by both the state and the applicant; the USDA gives the example of an applicant missing an interview as an instance where the state was in compliance even as a delay occurs. The USDA also notes that cases where the applicant does not provide required materials (as long as they are properly encoded) should not appear in this measure.</p>
+<p>Very few states consistently meet the timeliness guidelines that the USDA sets.</p>
 <div class="card">
   <observablehq-loading></observablehq-loading><!--:5d8e3372:-->
 </div>
@@ -130,11 +142,18 @@ resize((width) => applicationProcessingTimelinessChart(aptData, width))
 <p>Note again the missing data from 2020 and 2021, where this reporting requirement was suspended.</p>
 <p>FNS <a href="https://www.fns.usda.gov/snap/qc/timeliness/fy23" target="_blank" rel="noopener noreferrer">provides a disclaimer</a> about using this as a regulatory compliance measure: A case may be coded as untimely even if the delay was caused by the applicant, unless the status of the case is properly flagged.</p>
 </details>
-<p>While the USDA publishes these annual APT rates for each state, in practice they seem to <a href="https://www.fns.usda.gov/snap/admin/improving-state-timeliness-rates-escalation-process-guidance" target="_blank" rel="noopener noreferrer">track quarterly rates</a> for their review process. This reporting lag alongside the difference in time periods used to measure compliance versus public reporting limits the usefulness of these annual numbers.</p>
-<p>For example, a USDA notice released April 1, 2025 to state agencies indicated 33 states are currently out of compliance; knowing this as a member of the public only seems to occur when the USDA sends one of these official notices. Are state agencies releasing quality control data more frequently to the public?</p>
+<p>While the USDA publishes these annual APT rates for each state from the Quality Control data, in practice they also seem to <a href="https://www.fns.usda.gov/snap/admin/improving-state-timeliness-rates-escalation-process-guidance" target="_blank" rel="noopener noreferrer">track monthly and quarterly rates from the states</a> for their review process. This reporting lag alongside the difference in time periods used to measure compliance versus public reporting limits the usefulness of these annual numbers. These more frequent reports may <a href="https://fns-prod.azureedge.us/sites/default/files/resource-files/updated_apt_escalation_procedures.pdf#page=10" target="_blank" rel="noopener noreferrer">also be calculated slightly differently</a> with respect to pending cases, since Quality Control data may have more information about a case.</p>
+<p>For example, a USDA notice released April 1, 2025 to state agencies indicated 33 states are currently out of compliance; knowing this as a member of the public only seems to occur when the USDA sends one of these official notices. Are state agencies releasing quality control data more frequently to the public? I have not been able to find it for Michigan or Illinois.</p>
+<p>What causes such consistently low timeliness rates across the U.S.?</p>
+<p>We can check if there is a relationship between higher numbers of cases and more late cases.</p>
+<div class="card">
+  <h2>Higher SNAP enrollment doesn't entirely explain states' lower timeliness rates</h2>
+  <h3>Highlighting <span style="color: #80cdc1; font-weight: bold;">2023</span> rates, with <span style="color: #dfc27d; font-weight: bold;">previous years</span> for context suggests we need to explore additional factors for not meeting USDA's expectations.</h3>
+  <observablehq-loading></observablehq-loading><!--:85fa2f28:-->
+</div>
 </main>
 <footer id="observablehq-footer">
 <nav><a rel="prev" href="./payment-error-rates"><span>Do states accurately determine eligibility and benefits?</span></a><a rel="next" href="./enrollment"><span>How does SNAP enrollment change after economic downturns?</span></a></nav>
-<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2025-04-13T20:57:41">Apr 13, 2025</a>.</div>
+<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2025-11-22T08:17:17">Nov 22, 2025</a>.</div>
 </footer>
 </div>
