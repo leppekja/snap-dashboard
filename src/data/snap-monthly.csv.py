@@ -72,7 +72,7 @@ class FNSFile:
         return pd.concat([self.clean_sheet(sheet) for sheet in sheets]).reset_index(drop=True)
 
 if __name__ == "__main__":
-    data_files = "src\data\snap-monthly.zip"
+    data_files = r"src\data\snap-monthly.zip"
     data = []
     with zipfile.ZipFile(data_files, 'r') as z:
         for file in z.namelist():
@@ -91,4 +91,4 @@ if __name__ == "__main__":
     csv_data["fiscal_year_month"] = pd.to_datetime(csv_data["fiscal_year_month"], format="%b %Y").dt.strftime("%Y-%m-%d")    
     csv_data = csv_data.replace("--", 0)
     csv_data = csv_data.groupby(["state", "fiscal_year_month"]).sum().reset_index()
-    csv_data.to_csv(sys.stdout, index=False, line_terminator='\n')
+    csv_data.to_csv(sys.stdout, index=False, lineterminator='\n')

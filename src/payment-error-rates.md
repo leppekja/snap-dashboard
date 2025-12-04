@@ -23,11 +23,11 @@ The [USDA defines](https://www.fns.usda.gov/snap/qc/per) _payment error rates_ a
 
 If eligibility or benefit determinations are incorrect, the state may pay too much, termed an _over payment_, or too little, an _under payment_, in SNAP benefits to the receiving household. The USDA reports the rates of over and under payments as a percent of all state cases, and as a weighted national average.
 
+Practically, nearly all reports will list a general payment error rate, which is the summed percents of the over and underpayments. For example, Maryland had a 13.64% payment error rate, which was comprised of 8.85% of overpayments and 4.79% of underpayments.
+
 Note that [there is a error threshold](https://www.fns.usda.gov/snap/qc/ett) that allows for small miscalculations; in 2025, this amount is $57.
 
 Also, the underpayment error rate does not include cases where a person is denied entirely incorrectly, and later deemed to have been eligible.
-
-The [USDA charges a penalty](https://www.fns.usda.gov/snap/qc) to states which have high payment error rates for two consecutive years (higher than the national payment error rate) and "meet additional statuatory criteria".
 
 <!-- Which states have qualified for these penalties, and when? -->
 
@@ -65,3 +65,5 @@ Additionally, some states have [intentionally misreported cases and implemented 
 ### Should there be a tolerance for errors at all?
 
 Senator Joni Earnst has twice submitted [a bill to reduce the payment error tolerance to zero](https://www.ernst.senate.gov/imo/media/doc/snap_back_inaccurate_snap_payments_bill_text.pdf).
+
+The [USDA charges a penalty](https://www.fns.usda.gov/snap/qc) to states which have high payment error rates for two consecutive years (higher than the national payment error rate) and "meet additional statuatory criteria".

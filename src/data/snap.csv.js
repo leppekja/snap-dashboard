@@ -21,6 +21,7 @@ const meltedDataset = data.reduce((acc, record) => {
     "State/Territory": record["State/Territory"],
     Payment: Number(record["Over Payments"]),
     PaymentType: "OverPayment",
+    totalErrorRate: record["Payment Error Rates"],
     Source_Document: record["Source_Document"],
   });
 
@@ -31,6 +32,7 @@ const meltedDataset = data.reduce((acc, record) => {
     "State/Territory": record["State/Territory"],
     Payment: -Number(record["Under Payments"]),
     PaymentType: "UnderPayment",
+    totalErrorRate: record["Payment Error Rates"],
     Source_Document: record["Source_Document"],
   });
 
@@ -51,12 +53,14 @@ const data2 = meltedDataset
                 "Fiscal Year": new Date(v, 0, 1),
                 "State/Territory": d,
                 Payment: NaN,
+                totalErrorRate: NaN,
                 PaymentType: "OverPayment",
               },
               {
                 "Fiscal Year": new Date(v, 0, 1),
                 "State/Territory": d,
                 Payment: NaN,
+                totalErrorRate: NaN,
                 PaymentType: "UnderPayment",
               },
             ];
