@@ -38,7 +38,7 @@ const snapCost2023 = snapCostsAndParticipation.filter(
   <h1>Visualizing SNAP Performance Indicators</h1>
 </div>
 
-A work-in-progress as of 11-22-25 exploring USDA data on [SNAP quality control measures](https://www.fns.usda.gov/snap/qc). This dashboard shows examples on how to use [published data](https://github.com/leppekja/SNAP-performance-indicators) while highlighting its limitations.
+A work-in-progress as of 12-21-25 exploring USDA data on [SNAP quality control measures](https://www.fns.usda.gov/snap/qc). This dashboard shows examples on how to use [published data](https://github.com/leppekja/SNAP-performance-indicators) while highlighting its limitations.
 
 ## The Benefits & Costs of SNAP
 

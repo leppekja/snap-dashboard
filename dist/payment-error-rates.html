@@ -13,7 +13,7 @@
 <link rel="modulepreload" href="./_observablehq/client.2a270bd5.js">
 <link rel="modulepreload" href="./_observablehq/runtime.aa35fb13.js">
 <link rel="modulepreload" href="./_observablehq/stdlib.00247f76.js">
-<link rel="modulepreload" href="./_import/components/payment_error_rate.b0f2c807.js">
+<link rel="modulepreload" href="./_import/components/payment_error_rate.39184f2a.js">
 <link rel="modulepreload" href="./_npm/@observablehq/plot@0.6.17/d761ef9b.js">
 <link rel="modulepreload" href="./_observablehq/stdlib/inputs.cf170d8f.js">
 <link rel="modulepreload" href="./_npm/d3-dsv@3.0.1/9cffc2bd.js">
@@ -60,21 +60,23 @@
 import {define} from "./_observablehq/client.2a270bd5.js";
 import {registerFile} from "./_observablehq/stdlib.00247f76.js";
 
+registerFile("./data/grid.csv", {"name":"./data/grid.csv","mimeType":"text/csv","path":"./_file/data/grid.399d5ec0.csv","lastModified":1737410605265,"size":869});
 registerFile("./data/snap.csv", {"name":"./data/snap.csv","mimeType":"text/csv","path":"./_file/data/snap.c94e5c76.csv","lastModified":1764850557987,"size":169158});
 registerFile("./data/snap_participation_and_spending_with_projections.csv", {"name":"./data/snap_participation_and_spending_with_projections.csv","mimeType":"text/csv","path":"./_file/data/snap_participation_and_spending_with_projections.3e8f7e4c.csv","lastModified":1727659167606,"size":774});
 
-define({id: "f0a10b29", outputs: ["paymentErrorRatesOverTime","paymentErrorStateChange"], body: async () => {
-const {paymentErrorRatesOverTime, paymentErrorStateChange} = await import("./_import/components/payment_error_rate.b0f2c807.js");
+define({id: "01e74481", outputs: ["paymentErrorRatesOverTime","paymentErrorStateChange","potentialCostSharingPER"], body: async () => {
+const {paymentErrorRatesOverTime, paymentErrorStateChange, potentialCostSharingPER} = await import("./_import/components/payment_error_rate.39184f2a.js");
 
-return {paymentErrorRatesOverTime,paymentErrorStateChange};
+return {paymentErrorRatesOverTime,paymentErrorStateChange,potentialCostSharingPER};
 }});
 
-define({id: "eaa155c4", inputs: ["FileAttachment"], outputs: ["data","snapCostsAndParticipation"], body: (FileAttachment) => {
+define({id: "a902ac6c", inputs: ["FileAttachment"], outputs: ["data","snapCostsAndParticipation","grid"], body: (FileAttachment) => {
 const data = FileAttachment("./data/snap.csv").csv({ typed: true });
 const snapCostsAndParticipation = FileAttachment(
   "./data/snap_participation_and_spending_with_projections.csv"
 ).csv({ typed: true });
-return {data,snapCostsAndParticipation};
+const grid = FileAttachment("./data/grid.csv").csv({ typed: true });
+return {data,snapCostsAndParticipation,grid};
 }});
 
 define({id: "0644bcbf", inputs: ["Inputs","data","Generators"], outputs: ["stateInput","state"], body: (Inputs,data,Generators) => {
@@ -95,6 +97,42 @@ stateInput
 define({id: "713d3bfe", mode: "inline", inputs: ["resize","paymentErrorRatesOverTime","data","state","display"], body: async (resize,paymentErrorRatesOverTime,data,state,display) => {
 display(await(
 resize((width) => paymentErrorRatesOverTime(data, state, width))
+))
+}});
+
+define({id: "c1e1b284", inputs: ["data","Inputs","Generators"], outputs: ["totalErrorRateByState2024","costShareInput","costShareLevel"], body: (data,Inputs,Generators) => {
+// data is in long format; only need first instance between over or underpayment really
+const totalErrorRateByState2024 = data.filter(
+  (d) =>
+    (d["Fiscal Year"].getFullYear() === 2024) &
+    (d.PaymentType === "OverPayment")
+);
+
+const costShareInput = Inputs.radio(
+  new Map([
+    ["0%", 0],
+    ["5%", 5],
+    ["10%", 10],
+    ["15%", 15],
+  ]),
+  {
+    label: "Potential Level of Cost Sharing in 2028",
+    value: 0,
+  }
+);
+const costShareLevel = Generators.input(costShareInput);
+return {totalErrorRateByState2024,costShareInput,costShareLevel};
+}});
+
+define({id: "8be182ad", mode: "inline", inputs: ["costShareInput","display"], body: async (costShareInput,display) => {
+display(await(
+costShareInput
+))
+}});
+
+define({id: "50d4eaa3", mode: "inline", inputs: ["resize","potentialCostSharingPER","totalErrorRateByState2024","grid","costShareLevel","display"], body: async (resize,potentialCostSharingPER,totalErrorRateByState2024,grid,costShareLevel,display) => {
+display(await(
+resize((width) => potentialCostSharingPER(totalErrorRateByState2024, grid, costShareLevel))
 ))
 }});
 
@@ -127,21 +165,31 @@ resize((width) => paymentErrorRatesOverTime(data, state, width))
 </aside>
 <div id="observablehq-center">
 <main id="observablehq-main" class="observablehq">
-<div class="observablehq observablehq--block"><!--:f0a10b29:--></div>
-<div class="observablehq observablehq--block"><!--:eaa155c4:--></div>
+<div class="observablehq observablehq--block"><!--:01e74481:--></div>
+<div class="observablehq observablehq--block"><!--:a902ac6c:--></div>
 <h1 id="do-states-accurately-determine-eligibility-and-benefits" tabindex="-1"><a class="observablehq-header-anchor" href="#do-states-accurately-determine-eligibility-and-benefits">Do states accurately determine eligibility and benefits?</a></h1>
 <p>The <a href="https://www.fns.usda.gov/snap/qc/per" target="_blank" rel="noopener noreferrer">USDA defines</a> <em>payment error rates</em> as measuring "the accuracy of each state’s eligibility and benefit determinations." This is not a measure of fraud.</p>
-<p>If eligibility or benefit determinations are incorrect, the state may pay too much, termed an <em>over payment</em>, or too little, an <em>under payment</em>, in SNAP benefits to the receiving household. The USDA reports the rates of over and under payments as a percent of all state cases, and as a weighted national average.</p>
-<p>Practically, nearly all reports will list a general payment error rate, which is the summed percents of the over and underpayments. For example, Maryland had a 13.64% payment error rate, which was comprised of 8.85% of overpayments and 4.79% of underpayments.</p>
-<p>Note that <a href="https://www.fns.usda.gov/snap/qc/ett" target="_blank" rel="noopener noreferrer">there is a error threshold</a> that allows for small miscalculations; in 2025, this amount is $57.</p>
+<p>If eligibility or benefit determinations are incorrect, the state may pay too much, termed an <em>over payment</em>, or too little, an <em>under payment</em>, in SNAP benefits to the receiving household. The USDA reports the rates of over and under payments as a percent of total allotment amounts, and as a weighted national average by state caseloads.</p>
+<p>Note that when errors (over or under-payments) are identified, they <a href="https://www.fns.usda.gov/snap/qc#AreSNAPrecipientsresponsibleforpayingbackbenefitstheyincorrectlyreceivedDotheygetrepaidforbenefitslessthanwhattheywereentitledto" target="_blank" rel="noopener noreferrer">must be fixed</a>. So people who receive too much need to pay the state back, and people who receive too little are reimbursed by the state.</p>
+<p>Practically, nearly all reports will list a general payment error rate, which is the summed percents of the over and underpayments. For example, Maryland had a 13.64% payment error rate in FY 2024, which was comprised of 8.85% of overpayments and 4.79% of underpayments.</p>
+<p>Note that <a href="https://www.fns.usda.gov/snap/qc/ett" target="_blank" rel="noopener noreferrer">there is a error threshold</a> that allows for small miscalculations; in 2025, this amount is $57. It <a href="https://www.fns.usda.gov/snap/qc/ett/fy26" target="_blank" rel="noopener noreferrer">increases by one dollar</a> to $58 in FY 2026.</p>
 <p>Also, the underpayment error rate does not include cases where a person is denied entirely incorrectly, and later deemed to have been eligible.</p>
+<p>It's important to note that error rates are published in dollar amounts. A 10% total payment error rate indicates an estimate that 10% of dollars paid through SNAP were initially incorrectly paid.</p>
+<p>So in Maryland, this does not mean that 8.85% of households were overpaid! It means that 8.85% of dollors paid through SNAP were paid out as overpayments. If Maryland paid out $100 in SNAP benefits, $8.85 was overpaid, and $4.79 was not paid to households that should have been paid.</p>
+<p>This doesn't say anything about the magnitude of each payment (with the exception of knowing it was above the treshold by basis of it being included in the error rate), nor how common overpayments were, nor how many people were overpaid.</p>
+<p>A lower underpayment rate (compared to overpayments) just indicates</p>
+<ul>
+<li>the total amount of money that should have been given to households but wasn't initially (underpayment)</li>
+<li>is less than</li>
+<li>the total amount of money that was given to households initially but shouldn't have been (overpayment).</li>
+</ul>
+<p>For this reason, I think the payment error rate is a poor metric for public usage. Most news articles won't really even dive into what the error rate exactly calculates. It's just "the payment error rate", which to me implies the frequency of errors made. For example, this <a href="https://www.silive.com/data/2024/07/national-snap-benefit-payment-error-rate-nears-12-which-states-issue-the-most-overpayments-underpayments.html" target="_blank" rel="noopener noreferrer">news article</a> seems to incorrectly infer how often households are under or over paid.</p>
 <!-- Which states have qualified for these penalties, and when? -->
 <div class="observablehq observablehq--block"><!--:0644bcbf:--></div>
 <div class="card">
 <h2>Measurement policy changes and national crises contribute to rising published error rates in recent years.</h2>
-<h3>In FY '23, nearly 60% of Alaska's cases resulted in
-      overpayments due to a misapplication of a waiver, while 4.5% of recipients
-      were underpaid in D.C. Explore more and highlight a state:</h3>
+<h3>In FY '23, nearly 60% of Alaska's SNAP dollars were
+      overpayments due to a misapplication of a waiver. Explore more and highlight a state:</h3>
   <observablehq-loading></observablehq-loading><!--:e0e8388a:-->
   <observablehq-loading></observablehq-loading><!--:713d3bfe:-->
 </div>
@@ -155,10 +203,20 @@ resize((width) => paymentErrorRatesOverTime(data, state, width))
 <p>Additionally, some states have <a href="https://www.justice.gov/archives/opa/pr/florida-department-children-and-families-agrees-pay-175-million-resolve-false-claims-act" target="_blank" rel="noopener noreferrer">intentionally misreported cases and implemented disallowed policies to lower their error rates</a>.</p>
 <h3 id="should-there-be-a-tolerance-for-errors-at-all" tabindex="-1"><a class="observablehq-header-anchor" href="#should-there-be-a-tolerance-for-errors-at-all">Should there be a tolerance for errors at all?</a></h3>
 <p>Senator Joni Earnst has twice submitted <a href="https://www.ernst.senate.gov/imo/media/doc/snap_back_inaccurate_snap_payments_bill_text.pdf" target="_blank" rel="noopener noreferrer">a bill to reduce the payment error tolerance to zero</a>.</p>
-<p>The <a href="https://www.fns.usda.gov/snap/qc" target="_blank" rel="noopener noreferrer">USDA charges a penalty</a> to states which have high payment error rates for two consecutive years (higher than the national payment error rate) and "meet additional statuatory criteria".</p>
+<p>The <a href="https://www.fns.usda.gov/snap/qc" target="_blank" rel="noopener noreferrer">USDA charges a penalty</a> to states which have high payment error rates for two consecutive years (higher than the national payment error rate) and "meet additional statuatory criteria". 50% of the charged penalty can be used for program improvement within the state. I'm unsure of where to find data about which states have been penalized or the amounts charged.</p>
+<h3 id="basing-policy-on-the-payment-error-rate" tabindex="-1"><a class="observablehq-header-anchor" href="#basing-policy-on-the-payment-error-rate">Basing policy on the payment error rate</a></h3>
+<p>In 2025, the Trump Administration passed a bill to link these error rates to more severe financial penalties through a cost-sharing program, where the federal government will force the states to pay more of the program benefits and administration costs if the error rate is above 6% starting in FY 2028.</p>
+<p>This is detailed in section 139 STAT. 84 in the <a href="https://www.congress.gov/bill/119th-congress/house-bill/1/text" target="_blank" rel="noopener noreferrer">text of the act</a>. Obviously, the FY 2025 and 2026 error rates are not available yet. Let's just go ahead for the fun of it and use the latest FY 2024 rates to see what happens.</p>
+<div class="observablehq observablehq--block"><!--:c1e1b284:--></div>
+<div class="card">
+  <h2>SNAP benefits will be much more expensive for states with high payment error rates.</h2>
+  <h3>Recent legislation passed by the Trump Administration pushes allotment costs onto states starting FY 2028 if payment error rates exceed thresholds of 6%, 8%, or 10%+.</h3>
+  <observablehq-loading></observablehq-loading><!--:8be182ad:-->
+  <observablehq-loading></observablehq-loading><!--:50d4eaa3:-->
+</div>
 </main>
 <footer id="observablehq-footer">
 <nav><a rel="prev" href="./"><span>SNAP Performance Indicators</span></a><a rel="next" href="./application-processing-timeliness"><span>Do states process applications quickly enough for federal standards?</span></a></nav>
-<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2025-12-04T13:15:40">Dec 4, 2025</a>.</div>
+<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2025-12-22T02:47:58">Dec 22, 2025</a>.</div>
 </footer>
 </div>
